@@ -1,0 +1,12 @@
+from numpy import *
+from random import randint
+
+matriz = ones((4,5), dtype=int)
+
+for a in range(4):
+  for b in range(5):
+    matriz[a,b] = randint(0,100)
+
+print(matriz)
+print(f"la sum de la cada fila: {matriz.sum(1)}")
+print(f"la sum de cada colum: {matriz.sum(0)}")
