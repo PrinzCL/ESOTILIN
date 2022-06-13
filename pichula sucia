@@ -1,0 +1,46 @@
+def calcularIVA(precio):
+  return precio * 0.19
+def descotar(precio, porcentaje):
+    return precio * (1 - porcentaje / 100)
+def calcularIMC(peso, estatura):
+    imc = peso / estatura ** 2
+    if imc < 18.5:
+      print(f"IMC: {imc}, CATEGORIA: bajo peso ")
+    elif imc >= 18.5 and imc <= 24.9:
+      print(f"IMC: {round(imc, 1)}, CATEGORIA: adecuado")
+    elif imc >= 25 and imc <= 29.9:
+      print(f"IMC: {round(imc, 1)}, CATEGORIA: sobrepeso")
+    elif imc >= 30 and imc <= 34.9:
+      print(f"IMC: {round(imc, 1)}, CATEGORIA: obesidad 1")
+    elif imc >= 35 and imc <= 39.9:
+      print(f"IMC: {round(imc, 1)}, CATEGORIA: obesidad 2")
+    else:
+      print(f"IMC: {round(imc, 1)}, CATEGORIA: obesidad 3")
+
+while True:
+      print("---------------------------------------------")
+      print("1)calcular IVA")
+      print("2) Aplicar descuento")
+      print("3) calcular IMC")
+      print("4( Salir")
+      print("---------------------------------------------")
+      opc = input("ingrese una opción")
+      if opc == "1":
+        precio = int(input("Ingrese precio producto                            :"))
+        print(f"El IVA es de ${calcularIVA(precio)}")
+
+      elif opc == "2":
+        precio = int(input("Ingrese precio producto:    "))
+        porcen = int(input("Ingrese porcentaje de descuento:    "))
+        print(f"Nuevo precoio: ${descontar(precio, porcen)}")
+
+      elif opc == "3":
+        peso = float(input("Ingrese peso (kg): "))
+        estatura = float(input("Ingrese estatura (mts): "))
+        calcularIMC(peso, estatura)
+      
+      elif opc == "4":
+        print("hasta pronto!.")
+        break
+      else:
+        print("error ingrese opción valida") 
