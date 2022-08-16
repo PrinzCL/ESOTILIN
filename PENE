@@ -1,0 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Laboratorio
+ */
+public class Pizza {
+    
+    //Atributos
+    private String nombre;
+    private String tamanio;
+    private int precio;
+    
+    //Constructor
+
+    public Pizza(String nombre, String tamanio, int precio) {
+        this.nombre = nombre;
+        this.tamanio = tamanio;
+        this.precio = precio;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getTamanio() {
+        return tamanio;
+    }
+
+    public void setTamanio(String tamanio) {
+        this.tamanio = tamanio;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+    
+    //Customer
+    
+    public void preparar(){
+        System.out.println("Se está preparando tu pizza!.");
+    }
+    
+}
+-----------------------
+
+public class Test {
+
+    public static void main(String[] args) {
+        Pizza pizza1 = new Pizza("Pizzaman", "Familiar", 12990);
+        pizza1.setNombre("Cuatro estaciones");
+        System.out.println(pizza1.getNombre());
+    
+        pizza1.preparar();
+    
+    
+    }
+}
