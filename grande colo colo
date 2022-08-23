@@ -1,0 +1,94 @@
+
+import java.time.LocalDate;
+
+
+public class Cuenta {
+    
+    private String propietario;
+    private String numero;
+    private String tipo;
+    private int saldo;
+    private LocalDate fechaVencimiento;
+
+    public Cuenta(String propietario, String numero, String tipo, int saldo, LocalDate fecha_vencimiento) {
+        this.propietario = propietario;
+        this.numero = numero;
+        this.tipo = tipo;
+        this.saldo = saldo;
+        this.fechaVencimiento = fecha_vencimiento;
+    }
+
+    public Cuenta() {
+    }
+
+    public String getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(String propietario) {
+        this.propietario = propietario;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(int saldo) {
+        this.saldo = saldo;
+    }
+
+    public LocalDate getFecha_vencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFecha_vencimiento(LocalDate fecha_vencimiento) {
+        this.fechaVencimiento = fecha_vencimiento;
+    }
+    
+    public void consultarSaldo(){
+        System.out.println("Su saldo es: $" + saldo);
+    }
+    public void abonarCuenta(int monto){
+        saldo = saldo + monto;
+        System.out.println("Abono exitoso, nuevo saldo: $" + saldo);
+    }
+    public void retirarSaldo(int retiro){
+        saldo = saldo - retiro;
+        System.out.println("Su nuevo saldo es:" + saldo);
+    }
+    public boolean comprobarVigencia(){
+        return LocalDate.now().isBefore(fechaVencimiento);
+        
+    }
+}
+------------------------------------------------------------------------------------------
+
+
+import java.time.LocalDate;
+
+
+public class Test {
+    public static void main(String[] args) {
+        Cuenta c = new Cuenta("Pepe", "123", "Corriente", 19000, LocalDate.parse("2022-08-25"));
+        c.consultarSaldo();
+        c.abonarCuenta(20000);
+        c.retirarSaldo(15000);
+        System.out.println(c.comprobarVigencia());
+    }
+}
