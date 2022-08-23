@@ -62,7 +62,7 @@ public class Cuenta {
     }
     
     public void consultarSaldo(){
-        System.out.println("Su salgo es de : $" + saldo);
+        System.out.println("Su saldo es de : $" + saldo);
     }
     public void abonar(int monto){
         saldo = saldo + monto;
