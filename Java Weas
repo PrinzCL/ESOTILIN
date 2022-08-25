@@ -1,0 +1,54 @@
+
+import java.util.Scanner;
+
+
+
+public class Test {
+    public static void main(String[] args) {
+        Scanner leer = new Scanner(System.in);
+        System.out.println("Ingrese algo: ");
+        String texto = leer.nextLine();
+        
+        System.out.println(texto.toUpperCase());
+        System.out.println(texto.toLowerCase());
+        System.out.println(texto.length());
+        System.out.println(texto.replace("h", "j"));
+        System.out.println(texto.contains("@"));
+        System.out.println(texto.endsWith(".com"));
+        System.out.println(texto.startsWith("http"));
+        System.out.println(texto.indexOf("@"));
+        System.out.println(texto.lastIndexOf("/"));
+        System.out.println(texto.substring(2, 6));
+
+//        System.out.print("Ingrese numero: ");
+//        int numero = leer.nextInt();
+//        for (int i = 1; i <= 10; i++) {
+//            System.out.println(numero + " X "+ i + " = "+numero * i);
+//            
+//        }
+        
+
+
+//        System.out.print("Ingrese un numero: ");
+//        int numero = leer.nextInt();
+//        int contador = 0;
+//        while(contador < numero){
+//            System.out.println("Eres un manco!");
+//            contador++;
+//        }
+
+
+//        System.out.println("Ingrese su edad ");
+//        int edad = leer.nextInt();
+//        System.out.println("Ingrese su nombre: ");
+//        String nombre = leer.next();
+//        System.out.println("Hola "+nombre+" tienes "+edad+" años!.");
+//        if (edad < 18){
+//            System.out.println("Eres un niño!");   
+//        }else if(edad >64){
+//            System.out.println("Eres un welito!.");
+//        }else{
+//            System.out.println("Eres un adultero.");
+//        }
+    }
+}
