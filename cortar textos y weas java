@@ -1,0 +1,17 @@
+public class Test {
+    public static void main(String[] args) {
+        Scanner leer = new Scanner(System.in);
+        
+        System.out.println("Ingrese algo");
+        String texto = leer.nextLine();
+        
+        System.out.println(texto.toUpperCase());
+        System.out.println(texto.toLowerCase());
+        System.out.println(texto.length());
+        System.out.println(texto.replace("h", "j"));
+        System.out.println(texto.contains("@"));
+        System.out.println(texto.endsWith(".com"));
+        System.out.println(texto.startsWith("http"));
+        System.out.println(texto.indexOf("@"));
+        System.out.println(texto.lastIndexOf("/"));
+        System.out.println(texto.substring(2,6));
