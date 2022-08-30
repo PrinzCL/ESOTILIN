@@ -1,0 +1,42 @@
+CREATE TABLE INFORME_AGUINALDO
+    AS
+        SELECT
+            TRIM('El empleado'
+                 || ' '
+                 || initcap(pnombre_emp
+                            || ' '
+                            || appaterno_emp)
+                 || ' '
+                 || 'Tiene '
+                 || ' '
+                 || round(months_between(sysdate, fecha_nac) / 12)
+                 || ' '
+                 || 'años'
+                 || ' '
+                 || 'porque nació el'
+                 || ' '
+                 || to_char(fecha_nac, 'DD')
+                 || ' '
+                 || 'de '
+                 || ' '
+                 || TRIM(to_char(fecha_nac, 'Month'))
+                 || ' '
+                 || rtrim('de ')
+                 || ' '
+                 || to_char(fecha_nac, 'YYYY')
+                 || ' '
+                 || 'lleva trabajando '
+                 || ' '
+                 || round(months_between(sysdate, fecha_contrato) / 12)
+                 || ' '
+                 || 'años en la empresa.'
+                 || ' '
+                 || 'Su sueldo del mes de septiembre es:'
+                 || ''
+                 || to_char(sueldo_base + 50000, '$999G999')) AS aguinaldo
+        FROM
+            empleado
+        WHERE
+            sueldo_base < 1000000
+        ORDER BY
+            sueldo_base ASC;
