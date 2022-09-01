@@ -1,0 +1,46 @@
+CREATE TABLE reporte_aguinaldo
+    AS
+        SELECT
+            initcap(pnombre_emp
+                    || ' '
+                    || snombre_emp
+                    || ' '
+                    || appaterno_emp
+                    || ' '
+                    || apmaterno_emp)                                   AS nombre,
+            to_char(sueldo_base, '$9G999G999')                  AS sueldo,
+            round(months_between(sysdate, fecha_contrato) / 12) AS "AÑOS TRABAJADOS",
+            CASE
+                WHEN round(months_between(sysdate, fecha_contrato) / 12) > 5
+                     AND round(months_between(sysdate, fecha_contrato) / 12) <= 10 THEN
+                    to_char(50000, '$9G999G999')
+                WHEN round(months_between(sysdate, fecha_contrato) / 12) >= 11
+                     AND round(months_between(sysdate, fecha_contrato) / 12) <= 15 THEN
+                    to_char(100000, '$9G999G999')
+                WHEN round(months_between(sysdate, fecha_contrato) / 12) >= 16
+                     AND round(months_between(sysdate, fecha_contrato) / 12) <= 20 THEN
+                    to_char(150000, '$9G999G999')
+                WHEN round(months_between(sysdate, fecha_contrato) / 12) >= 21
+                     AND round(months_between(sysdate, fecha_contrato) / 12) <= 25 THEN
+                    to_char(200000, '$9G999G999')
+                ELSE
+                    to_char(250000, '$9G999G999')
+            END                                                 AS aguinaldo,
+            CASE
+                WHEN substr(pnombre_emp, 1, 1) BETWEEN 'A' AND 'H' THEN
+                    to_char(add_months(sysdate, 1), 'month')
+                WHEN substr(pnombre_emp, 1, 1) BETWEEN 'I' AND 'L' THEN
+                    to_char(add_months(sysdate, 2), 'month')
+                WHEN substr(pnombre_emp, 1, 1) BETWEEN 'M' AND 'O' THEN
+                    to_char(add_months(sysdate, 3), 'month')
+                WHEN substr(pnombre_emp, 1, 1) BETWEEN 'P' AND 'T' THEN
+                    to_char(add_months(sysdate, 4), 'month')
+                ELSE
+                    to_char(add_months(sysdate, 5), 'month')
+            END                                                 AS "MES DE PAGO"
+        FROM
+            empleado
+        WHERE
+            round(months_between(sysdate, fecha_contrato) / 12) >= 5
+        ORDER BY
+            aguinaldo DESC;
