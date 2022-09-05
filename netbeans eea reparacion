@@ -1,0 +1,181 @@
+public class Vehiculo {
+
+    private String patente;
+    private String modelo;
+    private int anio;
+    private String falla;
+    private String estado;
+    private String duenio;
+    private String correo;
+
+    public Vehiculo() {
+    }
+
+    public Vehiculo(String patente, String modelo, int anio, String falla, String estado, String duenio, String correo) {
+        this.patente = patente;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.falla = falla;
+        this.estado = estado;
+        this.duenio = duenio;
+        this.correo = correo;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getPatente() {
+        return patente;
+    }
+
+    public void setPatente(String patente) {
+        if (patente.length() == 6) {
+            this.patente = patente;
+        } else {
+            System.out.println("La patente debe ser de 6 caracteres");
+        }
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public String getFalla() {
+        return falla;
+    }
+
+    public void setFalla(String falla) {
+        this.falla = falla;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getDuenio() {
+        return duenio;
+    }
+
+    public void setDuenio(String duenio) {
+        this.duenio = duenio;
+    }
+
+}
+
+
+
+/////
+
+
+
+
+import java.time.LocalDate;
+
+public class Reparacion {
+
+    private LocalDate fechaReparacion;
+    private int descuento;
+    private int precio;
+    private String zonaReparada;
+    private String mecanico;
+    private Vehiculo vehiculo;
+
+    public Reparacion() {
+    }
+
+    public Reparacion(LocalDate fechaReparacion, int descuento, int precio, String zonaReparada, String mecanico, Vehiculo vehiculo) {
+        this.fechaReparacion = fechaReparacion;
+        this.descuento = descuento;
+        this.precio = precio;
+        this.zonaReparada = zonaReparada;
+        this.mecanico = mecanico;
+        this.vehiculo = vehiculo;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
+
+    public LocalDate getFechaReparacion() {
+        return fechaReparacion;
+    }
+
+    public void setFechaReparacion(LocalDate fechaReparacion) {
+        if (fechaReparacion.isBefore(LocalDate.now())) {
+
+            this.fechaReparacion = fechaReparacion;
+        } else {
+            System.out.println("La fecha de repearacion no puede ser menor a la actual");
+        }
+    }
+
+    public int getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public String getZonaReparada() {
+        return zonaReparada;
+    }
+
+    public void setZonaReparada(String zonaReparada) {
+        this.zonaReparada = zonaReparada;
+    }
+
+    public String getMecanico() {
+        return mecanico;
+    }
+
+    public void setMecanico(String mecanico) {
+        this.mecanico = mecanico;
+    }
+
+}
+
+
+///////////////
+
+
+
+
+public class Test {
+    public static void main(String[] args) {
+        Vehiculo v = new Vehiculo();
+    }
+}
