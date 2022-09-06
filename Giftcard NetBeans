@@ -1,0 +1,187 @@
+//Tarjeta
+import java.time.LocalDate;
+
+public class Tarjeta {
+
+    private int codigo;
+    private String clave;
+    private int monto;
+    private LocalDate vigencia;
+    private Trabajador trabajador;
+
+    public Tarjeta() {
+    }
+
+    public Tarjeta(int codigo, String clave, int monto, LocalDate vigencia, Trabajador trabajador) {
+        this.codigo = codigo;
+        this.clave = clave;
+        this.monto = monto;
+        this.vigencia = vigencia;
+        this.trabajador = trabajador;
+    }
+
+    public Trabajador getTrabajador() {
+        return trabajador;
+    }
+
+    public void setTrabajador(Trabajador trabajador) {
+        this.trabajador = trabajador;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public int getMonto() {
+        return monto;
+    }
+
+    public void setMonto(int monto) {
+        if (monto >= 0) {
+            this.monto = monto;
+        } else {
+            System.out.println("Error, el monto debe ser positivo!.");
+        }
+    }
+
+    public LocalDate getVigencia() {
+        return vigencia;
+    }
+
+    public void setVigencia(LocalDate vigencia) {
+        this.vigencia = vigencia;
+    }
+
+    public boolean validarClave() {
+        return clave.equals(trabajador.getRut().substring(0, 4));
+    }
+
+    public boolean validarMonto(int valor) {
+        return monto >= valor;
+    }
+    
+    public void descontarValor(int valor){
+        monto = monto - valor;
+    }
+    
+    public boolean validarVigencia(){
+        return vigencia.isAfter(LocalDate.now());
+    }
+
+}
+
+
+//Trabajador 
+
+
+public class Trabajador {
+
+    private String rut;
+    private char dv;
+    private String nombre;
+
+    public Trabajador() {
+    }
+
+    public Trabajador(String rut, char dv, String nombre) {
+        this.rut = rut;
+        this.dv = dv;
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        if (!nombre.isEmpty()) {
+            this.nombre = nombre;
+        } else {
+            System.out.println("Error, el nombre no puede estar vacío!.");
+        }
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public char getDv() {
+        return dv;
+    }
+
+    public void setDv(char dv) {
+        if (Character.isDigit(dv) || dv == 'k') {
+            this.dv = dv;
+        } else {
+            System.out.println("Error, ingrese numero o letra k!.");
+        }
+    }
+
+}
+
+//Test
+
+
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Test {
+
+    public static void main(String[] args) {
+        Scanner leer = new Scanner(System.in);
+        Trabajador t = new Trabajador("12345678", '9', "Juan");
+        Tarjeta t1 = new Tarjeta(1234, "123", 30000, LocalDate.parse("2022-08-31"), t);
+        while (true) {
+            System.out.println("***************************");
+            System.out.println("1) Validar clave");
+            System.out.println("2) descontar monto");
+            System.out.println("3) validar vigencia");
+            System.out.println("4) Salir");
+            System.out.print("Ingrese opcion: ");
+            int opc = leer.nextInt();
+            if (opc == 1) {
+                if (t1.validarClave()) {
+                    System.out.println("La clave es válida!.");
+                } else {
+                    System.out.println("La clave NO es válida!.");
+                }
+            } else if (opc == 2) {
+                System.out.print("Ingrese valor de la compra: $");
+                int valor = leer.nextInt();
+                if (t1.validarMonto(valor)) {
+                    t1.descontarValor(valor);
+                    System.out.println("Compra realizada, nuevo monto: $" + t1.getMonto());
+                } else {
+                    System.out.println("Saldo insuficiente!.");
+                }
+            } else if (opc == 3) {
+                if (t1.validarVigencia()) {
+                    System.out.println("La tarjeta está vigente.");
+                } else {
+                    System.out.println("La tarjeta está vencida!.");
+                }
+            } else if (opc == 4) {
+                System.out.println("Hasta pronto!.");
+                break;
+            } else {
+                System.out.println("Error, opcion no válida.");
+            }
+        }
+    }
+}
