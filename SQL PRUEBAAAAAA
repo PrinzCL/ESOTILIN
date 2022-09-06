@@ -1,0 +1,44 @@
+SELECT
+    to_char(numrun_cli, '99G999G999') || '-' || dvrun_cli as RUT,
+    INITCAP(pnombre_cli || ' ' || substr(snombre_cli, 1,1) || '.' || ' ' || appaterno_cli|| ' ' || apmaterno_cli) AS NOMBRE,
+    to_char(renta, '$9G999G999') AS RENTA,
+    '+56 2'||''||replace(to_char(fono_fijo_cli,'9999g9999'),'.',' ') as FONO,
+    round(months_between(sysdate,fecha_nac_cli) / 12) AS EDAD,
+    
+CASE 
+    WHEN id_tipo_cli = 'A' THEN
+        to_char(20000,'9G999G999')
+    WHEN id_tipo_cli = 'B' THEN
+        to_char(30000,'9G999G999')
+    WHEN id_tipo_cli = 'C' THEN
+        to_char(20000,'9G999G999')
+    ELSE
+        to_char(0)
+    END AS "DESCUENTO",
+    
+    CASE 
+    WHEN id_comuna = 122THEN
+        to_char(15000,'9G999G999')
+    WHEN id_comuna = 121 THEN
+        to_char(15000,'9G999G999')
+    
+    WHEN id_comuna = 118THEN
+        to_char(25000,'9G999G999')
+    WHEN id_comuna = 98THEN
+        to_char(25000,'9G999G999')
+    WHEN id_comuna = 114 THEN
+        to_char(25000,'9G999G999')
+    
+    WHEN id_comuna = 120 or id_comuna = 119 THEN
+        to_char(20000,'9G999G999')
+    WHEN id_comuna = 119 THEN
+        to_char(20000,'9G999G999')
+    WHEN id_comuna = 116 THEN
+        to_char(30000,'9G999G999')
+    ELSE
+        to_char(0)
+    END AS "DESCUENToo"
+    
+    
+FROM
+    cliente;    
