@@ -1,0 +1,51 @@
+SELECT
+    replace(to_char(numrun_cli, '999g999g999'), ',', '.')
+    || '-'
+    || dvrun_cli AS rut,
+    initcap(pnombre_cli
+            || ' '
+            || substr(snombre_cli, 0, 1)
+            || '. '
+            || appaterno_cli
+            || ' '
+            || apmaterno_cli) AS "NOMBRE COMPLETO",
+    to_char(renta, '$999g999g999') AS renta,
+    '+56 9'
+    || ' '
+    || replace(to_char(fono_fijo_cli, '9999G9999'), ',', ' ') AS "FONO FIJO",
+    trunc(months_between(sysdate, fecha_nac_cli) / 12) AS edad,
+    replace(EXTRACT(MONTH FROM sysdate) - EXTRACT(MONTH FROM fecha_nac_cli), '-', ' ') AS meses,
+    CASE
+        WHEN id_tipo_cli = 'A' THEN
+            to_char(20000, '$999g999g999')
+        WHEN id_tipo_cli = 'B' THEN
+            to_char(40000, '$999g999g999')
+        WHEN id_tipo_cli = 'C' THEN
+            to_char(30000, '$999g999g999')
+        ELSE
+            to_char(0, '$999g999g999')
+    END AS "DESCUENTO_MEMBRESIA",
+    CASE
+        WHEN id_comuna = 122 THEN
+            to_char(15000, '$999g999g999')
+        WHEN id_comuna = 98  THEN
+            to_char(25000, '$999g999g999')
+        WHEN id_comuna = 120 THEN
+            to_char(20000, '$999g999g999')
+        WHEN id_comuna = 119 THEN
+            to_char(20000, '$999g999g999')
+        WHEN id_comuna = 114 THEN
+            to_char(25000, '$999g999g999')
+        WHEN id_comuna = 116 THEN
+            to_char(30000, '$999g999g999')
+        WHEN id_comuna = 118 THEN
+            to_char(30000, '$999g999g999')
+        WHEN id_comuna = 121 THEN
+            to_char(15000, '$999g999g999')
+        ELSE
+            to_char(0, '$999g999g999')
+    END AS "BONO_UBICACION",
+    
+    renta + 'BONO_UBICACION' - ( renta * ( 7.2 / 100 ) ) - ( renta * ( 11 / 100 ) ) - 'DESCUENTO_MEMBRESIA' AS "SUELDO FINAL"
+FROM
+    cliente;
