@@ -1,0 +1,167 @@
+
+// caso 1
+
+SELECT
+    replace(to_char(t_rut, '999g999g999'), ',', '.')
+    || '-'
+    || t_dv AS rut,
+    initcap(t_nombre
+            || ' '
+            || t_apellido_paterno
+            || ' '
+            || t_apellido_materno) AS "NOMBRE COMPLETO",
+    t_fecha_nacimiento AS "FECHA DE NACIMIENTO",
+    to_char(t_sueldo, '$999G999G999') AS sueldo,
+    CASE
+        WHEN t_sueldo < 450000   THEN
+            to_char(60000, '$999G999G999')
+        WHEN t_sueldo >= 1000000 THEN
+            to_char(t_sueldo *(substr(t_sueldo, 1, 2) / 100), '999G999G999')
+        ELSE
+            to_char(t_sueldo *(substr(t_sueldo, 0, 1) / 100), '$999G999G999')
+    END AS bono
+FROM
+    trabajador
+ORDER BY
+    5 DESC;
+
+
+// Caso 2
+
+
+SELECT
+    initcap(p_nombre
+            || ' '
+            || p_apellido_paterno
+            || ' '
+            || p_apellido_paterno) AS "NOMBRE COMPLETO",
+    substr(EXTRACT(YEAR FROM p_fecha_contrato), 3, 2)
+    || ''
+    || substr(p_nombre, 1, 2)
+    || ''
+    || substr(p_apellido_paterno, 1, 2)
+    || ''
+    || substr(p_apellido_materno, - 2, 2)
+    || ''
+    || ( length(p_nombre) + length(p_apellido_paterno) + length(p_apellido_materno) )
+    || '@bilbaolabs-school.cl' AS correo,
+    CASE
+        WHEN substr(p_apellido_paterno, 1, 1) = 'A'
+             OR substr(p_apellido_paterno, 1, 1) = 'B'
+             OR substr(p_apellido_paterno, 1, 1) = 'C'
+             OR substr(p_apellido_paterno, 1, 1) = 'D'
+             OR substr(p_apellido_paterno, 1, 1) = 'E' THEN
+            'Lunes 04 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+        WHEN substr(p_apellido_paterno, 1, 1) = 'F'
+             OR substr(p_apellido_paterno, 1, 1) = 'G'
+             OR substr(p_apellido_paterno, 1, 1) = 'H'
+             OR substr(p_apellido_paterno, 1, 1) = 'I' THEN
+            'Miercoles 06 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+        WHEN substr(p_apellido_paterno, 1, 1) = 'J'
+             OR substr(p_apellido_paterno, 1, 1) = 'K'
+             OR substr(p_apellido_paterno, 1, 1) = 'L'
+             OR substr(p_apellido_paterno, 1, 1) = 'M' THEN
+            'Viernes 08 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+        WHEN substr(p_apellido_paterno, 1, 1) = 'N'
+             OR substr(p_apellido_paterno, 1, 1) = 'O'
+             OR substr(p_apellido_paterno, 1, 1) = 'P'
+             OR substr(p_apellido_paterno, 1, 1) = 'Q' THEN
+            'Lunes 11 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+        WHEN substr(p_apellido_paterno, 1, 1) = 'R'
+             OR substr(p_apellido_paterno, 1, 1) = 'S'
+             OR substr(p_apellido_paterno, 1, 1) = 'T'
+             OR substr(p_apellido_paterno, 1, 1) = 'U' THEN
+            'Miercoles 13 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+        ELSE
+            'Viernes 15 de octubre'
+            || ' '
+            || EXTRACT(YEAR FROM sysdate)
+    END AS "FECHA DE CAPACITACION"
+FROM
+    profesor
+WHERE
+    p_tipo = 'TP02'
+	
+	
+//CASO 3
+
+SELECT
+    replace(to_char(a_rut, '999g999g999'), ',', '.')
+    || '-'
+    || a_dv AS "RUT ALUMNO",
+    initcap(a_nombres
+            || ' '
+            || a_apellido_paterno
+            || ' '
+            || a_apellido_materno) AS "NOMBRE ALUMNO",
+    a_tipo_alumno AS "TIPO ALUMNO",
+    to_char(a_sueldo, '$999g999g999') AS sueldo,
+    nvl(a_telefono, 'NO POSEE TELÉFONO PARA CONTACTARLO') AS telefono
+FROM
+    alumno
+WHERE
+    a_tipo_alumno = 'TA01'
+    AND a_comuna = 'C001'
+    OR a_comuna = 'C002'
+    AND a_sueldo >= 850000
+ORDER BY
+    a_rut DESC;
+	
+// CASO 4 
+
+
+SELECT
+    'El profesor'
+    || ' '
+    || initcap(p_nombre
+               || ' '
+               || p_apellido_paterno
+               || ' '
+               || p_apellido_materno)
+    || ' estuvo de cumpleaños el '
+    || ''
+    || EXTRACT(DAY FROM p_fecha_nacimiento)
+    || ' de '
+    || to_char(p_fecha_nacimiento, 'month')
+    || ' y cumplio'
+    || ' '
+    || trunc(months_between(sysdate, p_fecha_nacimiento) / 12)
+    || ' años' AS "LISTADO DE CUMPLEAÑOS"
+FROM
+    profesor
+WHERE
+    EXTRACT(MONTH FROM p_fecha_nacimiento) = ( EXTRACT(MONTH FROM sysdate) - 1 )
+ORDER BY
+    EXTRACT(DAY FROM p_fecha_nacimiento) DESC
+	
+	
+//CASO 5
+
+
+SELECT
+    replace(to_char(p_rut, '999g999g999'), ',', '.')
+    || '-'
+    || p_dv AS "RUT PROFESOR",
+    initcap(p_nombre
+            || ' '
+            || p_apellido_paterno
+            || ' '
+            || p_apellido_paterno) AS "NOMBRE COMPLETO",
+    round(months_between(sysdate, p_fecha_contrato) / 12) AS "AÑOS TRABAJADOS",
+    replace(to_char(p_sueldo, '$999G999G999'), ',', '.') AS "SUELDO ACTUAL",
+    to_char(p_sueldo *(round(months_between(sysdate, p_fecha_contrato) / 12) / 100), '$999G999G999') AS "AUMENTO",
+    to_char(p_sueldo + p_sueldo *(round(months_between(sysdate, p_fecha_contrato) / 12) / 100), '$999G999G999') AS "SUELDO REAJUSTADO"
+FROM
+    profesor
+ORDER BY
+    p_sueldo ASC;
