@@ -1,0 +1,12 @@
+SELECT
+    ' EL SUELDO MAS BAJO ES: '
+    ||to_char(MIN(salario), '$999G999')
+    || ' El sueldo mas alto es:'
+    || to_char(MAX(salario), '$9G999G999')
+    || ' El promedio aproximado de todos los sueldos es: '
+    || to_char(AVG(salario), '$999G999')
+    || ' Todo lo anterior genera un gasto de: '
+    || to_char(SUM(salario), '$99G999G999')
+    || ' Para la empresa ' AS "REPORTE DE SUELDOS"
+FROM
+    empleado;
