@@ -1,0 +1,191 @@
+
+public class Puesto {
+    private int codigo;
+    private String nombre;
+
+    public Puesto() {
+    }
+
+    public Puesto(int codigo, String nombre) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    @Override
+    public String toString() {
+        return "Puesto{" + "codigo=" + codigo + ", nombre=" + nombre + '}';
+    }
+    
+    
+    
+}
+---------------------------------------------------------------------------------
+
+public class Empleado {
+    private String rut;
+    private String nombre;
+    private char genero;
+    private int anioServicio;
+    private int edad;
+    private Puesto puesto;
+
+    public Empleado() {
+    }
+
+    public Empleado(String rut, String nombre, char genero, int anioServicio, int edad, Puesto puesto) {
+        this.rut = rut;
+        this.nombre = nombre;
+        this.genero = genero;
+        this.anioServicio = anioServicio;
+        this.edad = edad;
+        this.puesto = puesto;
+    }
+
+    public Puesto getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public char getGenero() {
+        return genero;
+    }
+
+    public void setGenero(char genero) {
+        this.genero = genero;
+    }
+
+    public int getAnioServicio() {
+        return anioServicio;
+    }
+
+    public void setAnioServicio(int anioServicio) {
+        this.anioServicio = anioServicio;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado{" + "rut=" + rut + ", nombre=" + nombre + ", genero=" + genero + ", anioServicio=" + anioServicio + ", edad=" + edad + ", puesto=" + puesto + '}';
+    }
+    
+    
+    
+    
+    
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.util.ArrayList;
+
+
+public class Empresa {
+    ArrayList<Empleado> empleados;
+
+    public Empresa() {
+        empleados = new ArrayList<>();
+    }
+    
+    public void agregar(Empleado nuevo){
+        for (Empleado empleado : empleados) {
+            if(empleado.getRut().equals(nuevo.getRut())){
+                System.out.println("error el empleado ya existe!.");
+                return;
+            }          
+        }
+        empleados.add(nuevo);
+        System.out.println("Usuario agregado");
+    }
+    
+    public void listar(){
+        System.out.println("-----------------------------------------------------------------------------");
+        for (Empleado empleado : empleados) {
+            System.out.println(empleado);
+        }
+        System.out.println("-----------------------------------------------------------------------------");
+    }
+    
+    public void eliminar(String rut){
+        for (Empleado empleado : empleados) {
+            if(empleado.getRut().equals(rut)){
+                empleados.remove(empleado);
+                System.out.println("Empleado eliminado!.");
+                return;
+            }
+        }
+        System.out.println("Eror Empleado no encontrado");
+    }
+    
+    
+            
+    
+}
+-------------------------------------------------------------------------------------------------------------
+
+public class Test {
+    public static void main(String[] args) {
+        Puesto p1 = new Puesto(1, "Cajero");
+        Puesto p2 = new Puesto(2, "Guardia");
+        
+        Empleado e1 = new Empleado("1-9", "Juan", 'M', 4, 36, p2);
+        Empleado e2 = new Empleado("2-7", "Jenny", 'F', 6, 27, p1);
+        Empleado e3 = new Empleado("3-5", "Anfres", 'M', 1, 26, p1);
+        
+        Empresa empresa = new Empresa();
+        
+        empresa.agregar(e1);
+        empresa.agregar(e2);
+        empresa.agregar(e2);
+        empresa.agregar(e3);
+        
+        empresa.listar();
+        
+        empresa.eliminar("2-7");
+        empresa.eliminar("4-3");
+        
+        empresa.listar();
+        
+    }
+    
+}
