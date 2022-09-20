@@ -1,0 +1,11 @@
+SELECT
+    TRIM(replace(initcap(tip.nombre_tipo_cliente), 'Trabajadores', '')) AS "TIPO CLIENTE",
+    COUNT(cli.numrun)                                                   AS "TOTAL CLIENTE"
+FROM
+         cliente cli
+    INNER JOIN tipo_cliente     tip ON cli.cod_tipo_cliente = tip.cod_tipo_cliente
+    INNER JOIN profesion_oficio pro ON cli.cod_prof_ofic = pro.cod_prof_ofic
+GROUP BY
+    tip.nombre_tipo_cliente
+ORDER BY
+    2;
