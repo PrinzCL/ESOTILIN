@@ -1,0 +1,154 @@
+
+public class RedSocial {
+    protected String usuario;
+    protected String clave;
+
+    public RedSocial() {
+    }
+
+    public RedSocial(String usuario, String clave) {
+        this.usuario = usuario;
+        this.clave = clave;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    @Override
+    public String toString() {
+        return "RedSocial{" + "usuario=" + usuario + ", clave=" + clave + '}';
+    }
+    
+    
+}
+------------------------
+
+
+public class Instagram extends RedSocial{
+    private int id;
+    private String historia;
+    private boolean estado;
+
+    public Instagram() {
+    }
+
+    public Instagram(int id, String historia, boolean estado, String usuario, String clave) {
+        super(usuario, clave);
+        this.id = id;
+        this.historia = historia;
+        this.estado = estado;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(String historia) {
+        this.historia = historia;
+    }
+
+ 
+    
+    
+    
+}
+----------
+
+
+import java.time.LocalDate;
+
+
+public class Twitter extends RedSocial{
+    private int id;
+    private String noticia;
+    private LocalDate fecha;
+
+    public Twitter() {
+    }
+
+    public Twitter(int id, String noticia, LocalDate fecha, String usuario, String clave) {
+        super(usuario, clave);
+        this.id = id;
+        this.noticia = noticia;
+        this.fecha = fecha;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNoticia() {
+        return noticia;
+    }
+
+    public void setNoticia(String noticia) {
+        this.noticia = noticia;
+    }
+
+    @Override
+    public String toString() {
+        return "Twitter{" + "id=" + id + ", noticia=" + noticia + ", fecha=" + fecha + '}' + super.toString();
+    }
+    
+   
+    
+}
+-----------
+
+
+import java.time.LocalDate;
+
+public class Test {
+
+    public static void main(String[] args) {
+        /*RedSocial rs = new RedSocial("manco", "1234"); 
+        System.out.println(rs);*/
+        
+        Instagram in = new Instagram(1, "Alza de l patata", true, "Juanpatata", "Pataton");
+        Twitter tw = new Twitter(2, "Patata sigue en bronze", LocalDate.now(), "Patatin", "Gaypata");
+        System.out.println(in);
+        System.out.println(tw);
+
+    }
+}
