@@ -1,7 +1,7 @@
 SELECT
     INITCAP(pnombre || ' ' || appaterno) AS "NOMBRE CLIENTE",
     INITCAP(pro.nombre_prof_ofic) AS "PROFESION",
-    REPLACE(UPPER(tip.nombre_tipo_cliente),'TRABAJADORES','') AS "TIPO CLIENTE"
+    TRIM(REPLACE(INITCAP(tip.nombre_tipo_cliente),'Trabajadores','')) AS "TIPO CLIENTE"
     
 FROM
     cliente cli
