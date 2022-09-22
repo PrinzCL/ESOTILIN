@@ -1,0 +1,34 @@
+SELECT
+    to_char(cli.numrun, '999g999g999')
+    || '-'
+    || cli.dvrun                                                        AS "RUN CLIENTE",
+    initcap(pnombre
+            || ' '
+            || snombre
+            || ' '
+            || appaterno
+            || ' '
+            || apmaterno)                                                       AS "NOMBRE COMPLETO",
+    to_char(cre.monto_solicitado, '$999g999g999g999')                   AS "MONTO CREDITO SOLICITADO",
+    CASE
+        WHEN cre.monto_solicitado < 1000000 THEN
+            ( cre.monto_solicitado / 100000 ) * 100
+        ELSE
+            ( cre.monto_solicitado / 100000 ) * 150
+    END                                                                 AS "PUNTOS OBTENIDOS",
+    crd.nombre_credito                                                  AS "NOMBRE DE CREDITO SOLICITADO",
+    suc.direccion                                                       AS "DIRECCION SUCURSAL",
+    pro.nombre_prof_ofic AS "PROFESION/OFICIO CLIENTE",
+    TRIM(initcap(replace(tip.nombre_tipo_cliente, 'Trabajadores', ''))) AS "TIPO CLIENTE"
+FROM
+         cliente cli
+    INNER JOIN credito_cliente  cre ON cli.nro_cliente = cre.nro_cliente
+    INNER JOIN credito          crd ON cre.cod_credito = crd.cod_credito
+    INNER JOIN sucursal_banco   suc ON cre.id_sucursal = suc.id_sucursal
+    INNER JOIN profesion_oficio pro ON cli.cod_prof_ofic = pro.cod_prof_ofic
+    INNER JOIN tipo_cliente     tip ON cli.cod_tipo_cliente = tip.cod_tipo_cliente
+WHERE
+        cli.cod_tipo_cliente != 3
+    AND substr(to_char(cre.fecha_otorga_cred, 'Mon'), 1, 3) = '&mes_entrega_credito'
+ORDER BY
+    1 DESC
