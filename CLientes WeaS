@@ -1,3 +1,4 @@
+CREATE TABLE EJERCICIO_TIPO_PRUEBA AS
 SELECT
     to_char(numrun, '99G999G999')
     || '-'
@@ -14,7 +15,7 @@ SELECT
             TRUNC(( cre.monto_credito / 100000 ) * 100,-2)
         ELSE
             TRUNC(( cre.monto_credito / 100000 ) * 150,-2)
-    END                                                                 AS "Total de puntos obtenidos",
+    END                                                                 AS "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Total de puntos obtenidos",
     cred.nombre_credito                                                 AS "Nombre credito solicitado",
     suc.direccion                                                       AS "Direccion de sucursal de banco",
     pro.nombre_prof_ofic                                                AS "Profesion / oficio de cliente",
@@ -30,4 +31,4 @@ WHERE
         cli.cod_tipo_cliente != 3
     AND TRIM(to_char(cre.fecha_otorga_cred, 'Month')) = '&mes'
 ORDER BY
-    1
+    1;
