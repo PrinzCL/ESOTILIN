@@ -1,0 +1,29 @@
+SELECT
+    TO_CHAR(numrun, '99G999G999')||'-'||INITCAP(dvrun) AS "RUN cliente",
+    INITCAP(pnombre || ' ' || snombre|| appaterno || ' ' || apmaterno) AS "Nombre completo",
+    TO_CHAR(cre.monto_solicitado, '$9G999G999') AS "Monto de credito solicitado",
+    CASE 
+        WHEN cre.monto_solicitado < 1000000 THEN 
+        (cre.monto_solicitado/100000)*100
+        ELSE(cre.monto_solicitado/100000)*150
+        END AS "Total de puntos obtenidos",
+    cred.nombre_credito AS "Nombre credito solicitado",
+    suc.direccion AS "Direccion de sucursal de banco",
+    pro.nombre_prof_ofic AS "Profesion / oficio de cliente",
+    TRIM(replace(initcap(tip.nombre_tipo_cliente), 'Trabajadores', '')) AS "TIPO CLIENTE"
+   
+
+        
+    
+    
+FROM
+    cliente cli
+INNER JOIN credito_cliente cre ON cli.nro_cliente = cre.nro_cliente
+INNER JOIN credito cred ON cre.cod_credito = cred.cod_credito
+INNER JOIN sucursal_banco suc ON cre.id_sucursal = suc.id_sucursal
+INNER JOIN tipo_cliente     tip ON cli.cod_tipo_cliente = tip.cod_tipo_cliente
+INNER JOIN profesion_oficio pro ON cli.cod_prof_ofic = pro.cod_prof_ofic
+
+WHERE cli.cod_tipo_cliente != 3 AND TRIM(to_char(cre.fecha_otorga_cred, 'Month')) = '&mes'
+
+order by 1
