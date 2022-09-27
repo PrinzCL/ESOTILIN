@@ -1,0 +1,14 @@
+SELECT
+    em.first_name||' '||em.last_name "Nombre",
+    dep.department_name AS "Departamento",
+    reg.region_name AS "Region"
+
+    
+FROM
+    employees em
+    
+INNER JOIN departments dep on em.department_id = dep.department_id
+INNER JOIN locations loc on dep.location_id = loc.location_id
+INNER JOIN countries cou on loc.country_id = cou.country_id
+INNER JOIN regions reg on cou.region_id = reg.region_id
+
