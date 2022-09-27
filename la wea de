@@ -1,0 +1,279 @@
+
+public abstract class Pasatiempo {
+
+    protected int tiempoConectado;
+
+    public Pasatiempo() {
+    }
+
+    public Pasatiempo(int tiempoConectado) {
+        this.tiempoConectado = tiempoConectado;
+    }
+
+    public int getTiempoConectado() {
+        return tiempoConectado;
+    }
+
+    public void setTiempoConectado(int tiempoConectado) {
+        this.tiempoConectado = tiempoConectado;
+    }
+
+    public void listar() {
+        System.out.println("tiempoConectado = " + tiempoConectado);
+    }
+
+    public abstract void mostrarInfo();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+public class Musica extends Pasatiempo {
+    
+    private String tipoMusica;
+    
+    public Musica() {
+    }
+    
+    public Musica(String tipoMusica, int tiempoConectado) {
+        super(tiempoConectado);
+        this.tipoMusica = tipoMusica;
+    }
+    
+    public String getTipoMusica() {
+        return tipoMusica;
+    }
+    
+    public void setTipoMusica(String tipoMusica) {
+        this.tipoMusica = tipoMusica;
+    }
+    
+    @Override
+    public void listar() {
+        System.out.println("tiempoConectado = " + tiempoConectado);
+        System.out.println("tipoMusica = " + tipoMusica);
+    }
+    
+    @Override
+    public void mostrarInfo() {
+        System.out.println("tipoMusica = " + tipoMusica);
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class Serie extends Pasatiempo {
+    
+    private String genero;
+    
+    public Serie() {
+    }
+    
+    public Serie(String genero, int tiempoConectado) {
+        super(tiempoConectado);
+        this.genero = genero;
+    }
+    
+    public String getGenero() {
+        return genero;
+    }
+    
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+    
+    @Override
+    public void listar() {
+        System.out.println("tiempoConectado = " + tiempoConectado);
+        System.out.println("genero = " + genero);
+    }
+    
+    @Override
+    public void mostrarInfo() {
+        System.out.println("genero = " + genero);
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class RedSocial extends Pasatiempo {
+
+    private String usuario;
+    private String clave;
+    private String nombreRed;
+
+    public RedSocial() {
+    }
+
+    public RedSocial(String ususario, String clave, String nombreRed, int tiempoConectado) {
+        super(tiempoConectado);
+        this.usuario = ususario;
+        this.clave = clave;
+        this.nombreRed = nombreRed;
+    }
+
+    public String getNombreRed() {
+        return nombreRed;
+    }
+
+    public void setNombreRed(String nombreRed) {
+        this.nombreRed = nombreRed;
+    }
+
+    public String getUsusario() {
+        return usuario;
+    }
+
+    public void setUsusario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    @Override
+    public void listar() {
+        System.out.println("tiempoConectado = " + tiempoConectado);
+        System.out.println("clave = " + clave);
+        System.out.println("usuario = " + usuario);
+        System.out.println("nombreRed = " + nombreRed);
+    }
+
+    @Override
+    public void mostrarInfo() {
+        System.out.println("usuario = " + usuario);
+        System.out.println("nombreRed = " + nombreRed);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+public interface Likeable {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+
+public class Pasatiempos {
+
+    ArrayList<Pasatiempo> lista;
+
+    public Pasatiempos() {
+        lista = new ArrayList<>();
+    }
+
+    public void obtenerPopular() {
+        //Obtengo el tiempo del primer pasatiempo de la lista    
+        Pasatiempo mayor = lista.get(0);
+        //Recorremos la lista
+        for (Pasatiempo pasatiempo : lista) {
+            //Comparo el mayor con el pasatiempo de iteracion actual
+            if (mayor.getTiempoConectado() < pasatiempo.getTiempoConectado()) {
+                //si el pasatiempo actual tiene mas timepo conectado que mayor...
+                //Entonces en mayor ahora guardo el pasatimepo actual
+                mayor = pasatiempo;
+            }
+        }
+        //Mostramos la info de mayor
+        System.out.println("************************");
+        mayor.listar();
+        System.out.println("************************");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class Test {
+
+    public static void main(String[] args) {
+        Pasatiempos Pasatiempos = new Pasatiempos();
+        Musica m = new Musica("Reggaeton", 230);
+        Serie s = new Serie("Ficcion", 205);
+        RedSocial insta = new RedSocial("Tilin", "tilinsito123", "Instagram", 260);
+        RedSocial face = new RedSocial("Tilin", "tilinsito123", "Facebook", 233);
+
+        Pasatiempos.lista.add(m);
+        Pasatiempos.lista.add(s);
+        Pasatiempos.lista.add(insta);
+        Pasatiempos.lista.add(face);
+
+        Pasatiempos.obtenerPopular();
+    }
+}
