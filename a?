@@ -1,0 +1,25 @@
+SELECT
+    pnombre
+    || ' '
+    || apaterno
+    || ' '
+    || amaterno                                         AS "NOMBRE COMPLETO",
+    to_char(sueldo_base, '$999g999g999')                AS "SUELDO",
+    trunc(months_between(sysdate, fecha_contrato) / 12) AS "AÑOS DE TRABAJO"
+FROM
+    medico
+WHERE
+        trunc(months_between(sysdate, fecha_contrato) / 12) > (
+            SELECT
+                trunc(AVG(trunc(months_between(sysdate, fecha_contrato) / 12)))
+            FROM
+                medico
+        )
+    AND sueldo_base > (
+        SELECT
+            trunc(AVG(sueldo_base))
+        FROM
+            medico
+    )
+ORDER BY
+    3 DESC;
