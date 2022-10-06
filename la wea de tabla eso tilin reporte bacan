@@ -1,0 +1,29 @@
+create table ESO_TILIN_REPORTE_BACAN AS
+
+
+SELECT
+    pnombre
+    || ' '
+    || apaterno
+    || ' '
+    || amaterno                              AS "NOMBRE MEDICO",
+    esp.nombre                               AS "ESPECIALIDAD",
+    TRIM(initcap(substr(car.nombre, 7, 21))) AS "CARGO",
+    to_char(med.sueldo_base, '$999G999G999') AS "SUELDO",
+    ate.fecha_atencion
+FROM
+         medico med
+    INNER JOIN especialidad_medico esm ON med.med_run = esm.med_run
+    INNER JOIN especialidad        esp ON esm.esp_id = esp.esp_id
+    INNER JOIN cargo               car ON med.car_id = car.car_id
+    INNER JOIN atencion            ate ON esm.esp_id = ate.esp_id
+WHERE
+        med.sueldo_base > (
+            SELECT
+                AVG(sueldo_base) + 300000
+            FROM
+                medico
+        )
+    AND med.car_id IN ( 900, 800, 400, 300 )
+    AND EXTRACT(MONTH FROM(ate.fecha_atencion)) = ( '&Mes' )
+    AND EXTRACT(YEAR FROM(ate.fecha_atencion)) = ( '&Anio' )
