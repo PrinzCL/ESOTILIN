@@ -1,0 +1,26 @@
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        if(jtfUsuario.getText().equals("admin") &&
+                jpfClave.getText().equals("123")){
+            //ocultamos
+            this.dispose();
+            //mostramos
+            jfVentanaPrincipal.pack();
+            jfVentanaPrincipal.setLocationRelativeTo(this);
+            jfVentanaPrincipal.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Error, usurario y contraseña no existe!");
+            
+            
+            
+                private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        jtfPeso.setText("");
+        jtfEstatura.setText("");
+        
+        jtfPeso.requestFocus();
+        
+        
+            private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        double peso = Double.parseDouble(jtfPeso.getText());
+        double estatura = Double.parseDouble(jtfEstatura.getText());
+        double imc = peso / (estatura * estatura);
+        jlbResultado.setText("Su IMC es de " + imc);
