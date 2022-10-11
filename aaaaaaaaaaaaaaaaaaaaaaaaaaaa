@@ -1,0 +1,213 @@
+
+public class Principal extends javax.swing.JFrame {
+
+    Redes redes;
+    RedSocial user;
+    
+    public Principal() {
+        initComponents();
+        redes = new Redes();
+        redes.agregar(new RedSocial(1, "juanito", "123456"));
+        user = new Login(this, redes).getResponse();
+        if(user != null){
+            setVisible(true);
+        } else {
+            System.exit(0);
+        }
+    }
+
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
+}
+
+
+
+
+
+
+
+
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+
+public class Login extends javax.swing.JDialog {
+    
+    Redes redes;
+    RedSocial usuario;
+    RedSocial clave;
+
+
+    public Login(JFrame parent, Redes redes) {
+        super(parent, true);
+        initComponents();
+        this.redes = redes;
+        setLocationRelativeTo(null);
+        setVisible(true);
+        
+    }
+    
+    public RedSocial getResponse(){
+        return usuario;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jtfUsuario = new javax.swing.JTextField();
+        jpfClave = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel1.setText("Usuario:");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(70, 70, 100, 32);
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel2.setText("Contraseña:");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(70, 170, 130, 32);
+
+        jtfUsuario.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jtfUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jtfUsuario);
+        jtfUsuario.setBounds(70, 100, 390, 40);
+
+        jpfClave.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jPanel1.add(jpfClave);
+        jpfClave.setBounds(70, 200, 390, 40);
+
+        jButton1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jButton1.setText("Iniciar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(70, 290, 180, 90);
+
+        jButton2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(290, 290, 170, 90);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+    }                                          
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        usuario = redes.login(jtfUsuario.getText(), jpfClave.getText());
+        if(usuario == null ){
+            JOptionPane.showMessageDialog(this, "Datos incorrectos");
+            
+        }else{
+            dispose();
+        }
+        
+    }                                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        
+    }                                        
+
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField jpfClave;
+    private javax.swing.JTextField jtfUsuario;
+    // End of variables declaration                   
+}
