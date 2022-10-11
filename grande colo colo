@@ -1,0 +1,53 @@
+SELECT
+    to_char(aten.fecha_atencion, 'Month')          AS "MES DE ATENCION",
+    'Dr(a)'
+    || ' '
+    || medi.pnombre
+    || ' '
+    || medi.apaterno
+    || ' '
+    || medi.amaterno                               AS "NOMBRE MEDICO",
+    paci.pnombre
+    || ' '
+    || paci.apaterno                               AS "NOMBRE PACIENTE",
+    tips.descripcion                               AS "TIPO SALUD PACIENTE",
+    to_char(aten.costo, '$999G999G999')            AS "COSTO DE ATENCION",
+    to_char(paga.monto_a_cancelar, '$999G999G999') AS "COSTO FINAL"
+FROM
+         medico medi
+    INNER JOIN especialidad_medico espm ON medi.med_run = espm.med_run
+    INNER JOIN atencion            aten ON espm.med_run = aten.med_run
+    INNER JOIN pago_atencion       paga ON aten.ate_id = paga.ate_id
+    INNER JOIN paciente            paci ON aten.pac_run = paci.pac_run
+    INNER JOIN salud               salu ON paci.sal_id = salu.sal_id
+    INNER JOIN tipo_salud          tips ON salu.tipo_sal_id = tips.tipo_sal_id
+WHERE
+        to_char(aten.fecha_atencion, 'MM') = '10'
+    AND to_char(aten.fecha_atencion, 'YY') = '21'
+UNION ALL
+SELECT
+    to_char(aten.fecha_atencion, 'Month')          AS "MES DE ATENCION",
+    'Dr(a)'
+    || ' '
+    || medi.pnombre
+    || ' '
+    || medi.apaterno
+    || ' '
+    || medi.amaterno                               AS "NOMBRE MEDICO",
+    paci.pnombre
+    || ' '
+    || paci.apaterno                               AS "NOMBRE PACIENTE",
+    tips.descripcion                               AS "TIPO SALUD PACIENTE",
+    to_char(aten.costo, '$999G999G999')            AS "COSTO DE ATENCION",
+    to_char(paga.monto_a_cancelar, '$999G999G999') AS "COSTO FINAL"
+FROM
+         medico medi
+    INNER JOIN especialidad_medico espm ON medi.med_run = espm.med_run
+    INNER JOIN atencion            aten ON espm.med_run = aten.med_run
+    INNER JOIN pago_atencion       paga ON aten.ate_id = paga.ate_id
+    INNER JOIN paciente            paci ON aten.pac_run = paci.pac_run
+    INNER JOIN salud               salu ON paci.sal_id = salu.sal_id
+    INNER JOIN tipo_salud          tips ON salu.tipo_sal_id = tips.tipo_sal_id
+WHERE
+        to_char(aten.fecha_atencion, 'MM') = '10'
+    AND to_char(aten.fecha_atencion, 'YY') = '22';
