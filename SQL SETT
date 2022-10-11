@@ -1,0 +1,18 @@
+SELECT
+    ate.fecha_atencion AS "MES ATENCION",
+    'Dr ' || med.pnombre AS "NOMBRE MEDICO",
+    pac.pnombre || ' ' || pac.apaterno AS "NOMBRE PACIENTE",
+    tip.descripcion AS "TIPO SALUD",
+    ate.costo AS "COSTO ATENCION",
+    
+    
+    
+FROM
+    medico med
+
+INNER JOIN especialidad_medico esp ON med.med_run = esp.med_run
+INNER JOIN atencion ate ON esp.med_run = ate.med_run
+INNER JOIN paciente pac ON ate.pac_run = pac.pac_run
+INNER JOIN salud sal ON pac.sal_id = sal.sal_id
+INNER JOIN tipo_salud tip ON sal.tipo_sal_id = tip.tipo_sal_id
+ 
