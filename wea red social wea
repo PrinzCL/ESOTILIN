@@ -1,0 +1,167 @@
+
+public class RedSocial {
+
+    protected int id;
+    protected String ususario;
+    protected String clave;
+
+    public RedSocial() {
+    }
+
+    public RedSocial(int id, String ususario, String clave) {
+        this.id = id;
+        this.ususario = ususario;
+        this.clave = clave;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsusario() {
+        return ususario;
+    }
+
+    public void setUsusario(String ususario) {
+        this.ususario = ususario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+public class Instagram extends RedSocial {
+
+    protected String noticia;
+    protected boolean estado;
+
+    public Instagram() {
+    }
+
+    public Instagram(String noticia, boolean estado, int id, String ususario, String clave) {
+        super(id, ususario, clave);
+        this.noticia = noticia;
+        this.estado = estado;
+    }
+
+    public String getNoticia() {
+        return noticia;
+    }
+
+    public void setNoticia(String noticia) {
+        this.noticia = noticia;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.time.LocalDate;
+
+public class Twitter extends RedSocial {
+
+    protected String noticia;
+    protected LocalDate fecha;
+
+    public Twitter() {
+    }
+
+    public Twitter(String noticia, LocalDate fecha, int id, String ususario, String clave) {
+        super(id, ususario, clave);
+        this.noticia = noticia;
+        this.fecha = fecha;
+    }
+
+    public String getNoticia() {
+        return noticia;
+    }
+
+    public void setNoticia(String noticia) {
+        this.noticia = noticia;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.ArrayList;
+
+
+public class Redes {
+    ArrayList<RedSocial> redes;
+
+    public Redes() {
+        redes = new ArrayList<>();
+    }
+    
+    public RedSocial login(String usuario, String clave){
+        for (RedSocial red : redes) {
+            if(red.getUsusario().equals(usuario) && 
+                    red.getClave().equals(clave)){
+                return red;
+                
+            }
+                
+            
+        }
+        return null;
+    }
+    
+    
+}
