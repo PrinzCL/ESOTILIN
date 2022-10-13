@@ -1,0 +1,13 @@
+INSERT INTO marca (
+    id_marca,
+    nombre_marca
+) VALUES (
+    98,
+    (SELECT
+    appaterno_cli
+FROM
+    cliente
+WHERE 
+    numrun_cli = 10639521)
+    || to_char(add_months(sysdate, -(12*10)), 'yyyy')
+);
