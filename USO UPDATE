@@ -3,3 +3,31 @@ SET
     tc_valor = tc_valor * (&descuento / 100)
 WHERE
         tc_id IN ('TC01','TC04','TC08')
+        
+        
+        
+        
+        
+ UPDATE tipo_consulta
+SET
+    tc_valor = tc_valor * (&descuento / 100)
+WHERE
+        tc_id IN (SELECT
+    tc_id
+FROM
+    tipo_consulta
+WHERE 
+    tc_valor >= 3000);
+    
+
+
+UPDATE tipo_consulta
+SET
+    tc_valor = tc_valor * (&descuento / 100)
+WHERE
+        tc_id IN (SELECT
+    tc_id
+FROM
+    tipo_consulta
+WHERE 
+    tc_valor BETWEEN 1000 AND 2000)
