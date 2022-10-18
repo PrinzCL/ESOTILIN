@@ -1,0 +1,5 @@
+UPDATE tipo_consulta
+SET
+    tc_valor = tc_valor * (&descuento / 100)
+WHERE
+        tc_id IN ('TC01','TC04','TC08')
