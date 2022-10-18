@@ -1,0 +1,490 @@
+
+public class Producto {
+     protected String codigo;
+     protected String descripcion;
+     protected int precio;
+     protected int stock;
+
+    public Producto() {
+    }
+
+    public Producto(String codigo, String descripcion, int precio, int stock) {
+        this.codigo = codigo;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.stock = stock;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    @Override
+    public String toString() {
+        return "codigo=" + codigo + ", descripcion=" + descripcion + ", precio=" + precio + ", stock=" + stock + ", ";
+    }
+    
+    
+}
+------------------------------------------------
+
+public class Medicamento extends Producto {
+    
+    private String contraindicaciones;
+
+    public Medicamento() {
+    }
+
+    public Medicamento(String contraindicaciones, String codigo, String descripcion, int precio, int stock) {
+        super(codigo, descripcion, precio, stock);
+        this.contraindicaciones = contraindicaciones;
+    }
+
+    public String getContraindicaciones() {
+        return contraindicaciones;
+    }
+
+    public void setContraindicaciones(String contraindicaciones) {
+        this.contraindicaciones = contraindicaciones;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "contraindicaciones=" + contraindicaciones;
+    }
+    
+    
+    
+}
+------------------------------------------------------
+
+public class Suplemento extends Producto {
+    
+    private int cantidadVitaminas;
+
+    public Suplemento() {
+    }
+
+    public Suplemento(int cantidadVitaminas, String codigo, String descripcion, int precio, int stock) {
+        super(codigo, descripcion, precio, stock);
+        this.cantidadVitaminas = cantidadVitaminas;
+    }
+
+    public int getCantidadVitaminas() {
+        return cantidadVitaminas;
+    }
+
+    public void setCantidadVitaminas(int cantidadVitaminas) {
+        this.cantidadVitaminas = cantidadVitaminas;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "cantidadVitaminas=" + cantidadVitaminas;
+    }
+    
+    
+    
+}
+------------------------------------------------------------
+
+import java.util.ArrayList;
+
+
+public class Productos {
+    
+    ArrayList<Producto> productos;
+
+    public Productos() {
+        productos = new ArrayList<>();
+    }
+    
+    public String agregar(Producto nuevo){
+        for (Producto producto : productos) {
+            if(producto.getCodigo().equals(nuevo.getCodigo())){
+                return "Error, producto ya existe1.";
+            }
+        }
+        productos.add(nuevo);
+        return "Producto agregado!.";
+    }
+    
+    public String eliminar(String codigo){
+        for (Producto producto : productos) {
+            if (producto.getCodigo().equals(codigo)) {
+                productos.remove(producto);
+                return "Producto eliminado!.";
+                
+            }
+        }
+        return "Error,´producto no encontrado!.";
+    }
+    
+    public String listar(){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : productos) {
+            sb.append(producto).append("\n");
+            
+        }
+        return sb.toString();
+    }
+    
+    public Producto buscar(String codigo){
+        for (Producto producto : productos) {
+            if(producto.getCodigo().equals(codigo)){
+                return producto;
+            }
+        }
+        return null;
+    
+    }   
+    
+}
+------------------------------------------------
+
+
+import javax.swing.JOptionPane;
+
+
+public class Principal extends javax.swing.JFrame {
+
+    Productos productos;
+    
+    public Principal() {
+        initComponents();
+        productos = new Productos();
+        jrbMedicamento.doClick();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        bgTipo = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jrbSuplemento = new javax.swing.JRadioButton();
+        jrbMedicamento = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jtfCantidadVitaminas = new javax.swing.JTextField();
+        jtfStock = new javax.swing.JTextField();
+        jtfCodigo = new javax.swing.JTextField();
+        jtfDescripcion = new javax.swing.JTextField();
+        jtfPrecio = new javax.swing.JTextField();
+        jtfContraindicaiones = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtaDatos = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel1.setText("Cantidad vitaminas:");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(10, 270, 140, 20);
+
+        bgTipo.add(jrbSuplemento);
+        jrbSuplemento.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jrbSuplemento.setText("Suplemento");
+        jrbSuplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbSuplementoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jrbSuplemento);
+        jrbSuplemento.setBounds(230, 30, 110, 28);
+
+        bgTipo.add(jrbMedicamento);
+        jrbMedicamento.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jrbMedicamento.setSelected(true);
+        jrbMedicamento.setText("Medicamento");
+        jrbMedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMedicamentoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jrbMedicamento);
+        jrbMedicamento.setBounds(110, 30, 109, 28);
+
+        jLabel2.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel2.setText("Tipo:");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(30, 30, 80, 20);
+
+        jLabel3.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel3.setText("Codigo:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(30, 70, 80, 20);
+
+        jLabel4.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel4.setText("Descripcion:");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(10, 110, 100, 20);
+
+        jLabel5.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel5.setText("Precio:");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(30, 150, 80, 20);
+
+        jLabel6.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel6.setText("Stock:");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(30, 190, 80, 20);
+
+        jLabel7.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jLabel7.setText("Contraindicaciones:");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(10, 230, 140, 20);
+
+        jtfCantidadVitaminas.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfCantidadVitaminas);
+        jtfCantidadVitaminas.setBounds(160, 270, 170, 23);
+
+        jtfStock.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfStock);
+        jtfStock.setBounds(110, 190, 170, 23);
+
+        jtfCodigo.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfCodigo);
+        jtfCodigo.setBounds(110, 70, 160, 23);
+
+        jtfDescripcion.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfDescripcion);
+        jtfDescripcion.setBounds(110, 110, 170, 23);
+
+        jtfPrecio.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfPrecio);
+        jtfPrecio.setBounds(110, 150, 170, 23);
+
+        jtfContraindicaiones.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        jPanel1.add(jtfContraindicaiones);
+        jtfContraindicaiones.setBounds(160, 230, 170, 23);
+
+        jtaDatos.setColumns(20);
+        jtaDatos.setRows(5);
+        jScrollPane1.setViewportView(jtaDatos);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(350, 30, 280, 320);
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(280, 70, 60, 30);
+
+        jButton2.setText("Agregar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(10, 350, 80, 40);
+
+        jButton3.setText("Eliminar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(230, 350, 80, 40);
+
+        jButton4.setText("Limpiar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton4);
+        jButton4.setBounds(120, 350, 80, 40);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {         ----AGREGAR                                
+        String codigo = jtfCodigo.getText();
+        String descripcion = jtfDescripcion.getText();
+        int precio = Integer.parseInt(jtfPrecio.getText());
+        int stock = Integer.parseInt(jtfStock.getText());
+        if(jrbMedicamento.isSelected()){
+            String contraindicaciones = jtfContraindicaiones.getText();
+            Medicamento m = new Medicamento(contraindicaciones, codigo, descripcion, precio, stock);
+            JOptionPane.showMessageDialog(this, productos.agregar(m));
+        }else{
+            int cantidadVitaminas = Integer.parseInt(jtfCantidadVitaminas.getText());
+            Suplemento s = new Suplemento(cantidadVitaminas, codigo, descripcion, precio, stock);
+            JOptionPane.showMessageDialog(this, productos.agregar(s));
+        }
+        jtaDatos.setText(productos.listar());
+    }                                        
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {       --LIMPIAR                                  
+        jtfCantidadVitaminas.setText("");
+        jtfCodigo.setText("");
+        jtfContraindicaiones.setText("");
+        jtfDescripcion.setText("");
+        jtfPrecio.setText("");
+        jtfStock.setText("");
+        jrbMedicamento.doClick();
+        jtfCodigo.requestFocus();
+        
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {      ---ELIMINAR                                   
+        String codigo = jtfCodigo.getText();
+        JOptionPane.showMessageDialog(this,productos.eliminar(codigo));
+        jtaDatos.setText(productos.listar());
+    }                                        
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {       --BUSCAR                                  
+        String codigo = jtfCodigo.getText();
+        Producto prod = productos.buscar(codigo);
+        if(prod != null){
+            jtfCodigo.setText(prod.getCodigo());
+            jtfDescripcion.setText(prod.getDescripcion());
+            jtfPrecio.setText(""+prod.getPrecio());
+            jtfStock.setText(""+prod.getStock());
+            if(prod instanceof Medicamento){
+                jtfContraindicaiones.setText(((Medicamento) prod).getContraindicaciones());
+                jrbMedicamento.doClick();
+            }
+            if(prod instanceof Suplemento){
+                jtfCantidadVitaminas.setText(""+((Suplemento) prod).getCantidadVitaminas());
+                jrbSuplemento.doClick();
+                
+            }
+                
+        }else{
+            JOptionPane.showMessageDialog(this, "Error, producto no encontrado!.");
+        }
+    }                                        
+
+    private void jrbMedicamentoActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        habilitar(true);
+    }                                              
+
+    private void jrbSuplementoActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        habilitar(false);
+    }                                             
+
+    public void habilitar(boolean medicamento){
+        jtfContraindicaiones.setEnabled(medicamento);
+        jtfCantidadVitaminas.setEnabled(!medicamento);
+    }
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.ButtonGroup bgTipo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton jrbMedicamento;
+    private javax.swing.JRadioButton jrbSuplemento;
+    private javax.swing.JTextArea jtaDatos;
+    private javax.swing.JTextField jtfCantidadVitaminas;
+    private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfContraindicaiones;
+    private javax.swing.JTextField jtfDescripcion;
+    private javax.swing.JTextField jtfPrecio;
+    private javax.swing.JTextField jtfStock;
+    // End of variables declaration                   
+}
