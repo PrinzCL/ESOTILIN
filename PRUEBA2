@@ -1,0 +1,32 @@
+
+import java.util.ArrayList;
+
+
+public class Coleccion {
+    
+    ArrayList<Producto> productos;
+    
+ 
+    public Coleccion() {
+        productos = new ArrayList<>();
+    }
+    
+    public String agregar(Producto nuevo){
+        for (Producto producto : productos) {
+            if(producto.getISBN().equals(nuevo.getISBN())){
+                return "producto ya existe.";
+            } 
+        }
+        productos.add(nuevo);
+        return "Producto agregado.";
+    }
+    
+    
+    public String listar(){
+        StringBuilder sb = new StringBuilder();
+        for (Producto producto : productos) {
+            sb.append(producto).append("\n");
+        }
+        return sb.toString();
+    }
+}
