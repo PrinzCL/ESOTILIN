@@ -1,0 +1,10 @@
+SELECT
+    tc.tc_descripcion   AS "TIPO CONSULTA",
+    cm_tipo_id          AS "CODIGO",
+    COUNT(cm.cm_tipo_id) AS "CANTIDAD"
+FROM
+    consulta_medica   cm
+    INNER JOIN tipo_consulta     tc ON cm.cm_tipo_id = tc.tc_id
+GROUP BY
+    tc.tc_descripcion,
+    cm.cm_tipo_id
