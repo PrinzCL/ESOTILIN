@@ -1,0 +1,10 @@
+SELECT
+    replace(to_char(m_rut, '999g999g999'), ',', '.')
+    || '-'
+    || m_dv AS rut,
+    m_nombre || ' ' || m_apellido_paterno || ' ' || m_apellido_materno as "MEDICO",
+    ROUND(months_between(sysdate,m_fecha_contrato)/12) as "ANOS CONTRATADO",
+    TO_CHAR(m_sueldo,'999G999G999') AS "SUELDO"
+FROM
+    medico med
+INNER JOIN consulta_medica on med.
