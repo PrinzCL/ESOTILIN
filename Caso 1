@@ -1,0 +1,43 @@
+SELECT
+    cm.cm_id            AS "CONSULTA",
+    initcap(c_nombre_completo) AS "NOMBRE PACIENTE",
+    lower(c_correo) AS "CORREO ELECTRONICO",
+    TRIM(to_char(cm.cm_fecha_atencion, 'Day')
+         || ' '
+         || to_char(cm.cm_fecha_atencion, 'DD')
+         || ' de '
+         || to_char(cm.cm_fecha_atencion, 'month')
+         || ' del '
+         || to_char(cm.cm_fecha_atencion, 'YYYY')) AS "FECHA DE ATENCION",
+    tc.tc_descripcion   AS "TIPO CONSULTA",
+    TRIM(tc.tc_valor) AS "VALOR CONSULTA",
+    me.m_nombre
+    || ' '
+    || me.m_apellido_paterno
+    || ' '
+    || me.m_apellido_materno AS "MEDICO",
+    to_char(cm.cm_fecha_pago, 'day')
+    || ' '
+    || to_char(cm.cm_fecha_pago, 'dd')
+    || ' de '
+    || to_char(cm.cm_fecha_pago, 'month')
+    || ' del '
+    || to_char(cm.cm_fecha_pago, 'yyyy') AS "FECHA DE PAGO",
+    to_char(cm.cm_fecha_real_pago, 'day')
+    || ' '
+    || to_char(cm.cm_fecha_real_pago, 'dd')
+    || ' de '
+    || to_char(cm.cm_fecha_real_pago, 'month')
+    || ' del '
+    || to_char(cm.cm_fecha_real_pago, 'yyyy') AS "FECHA REAL PAGO",
+    EXTRACT(DAY FROM cm.cm_fecha_real_pago) - EXTRACT(DAY FROM cm.cm_fecha_pago) AS "DIAS ATRASO"
+FROM
+    cliente           c
+    INNER JOIN consulta_medica   cm ON c.c_rut = cm.cm_cliente_rut
+    INNER JOIN tipo_consulta     tc ON cm.cm_tipo_id = tc.tc_id
+    INNER JOIN medico            me ON cm.cm_medico_rut = me.m_rut
+WHERE
+    tc.tc_valor > 3000
+    AND EXTRACT(DAY FROM cm.cm_fecha_real_pago) - EXTRACT(DAY FROM cm.cm_fecha_pago) > 0
+ORDER BY
+    10 ASC;
