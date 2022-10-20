@@ -1,0 +1,30 @@
+--Caso 3
+
+----Proceso 1	
+	    INSERT INTO historial
+        SELECT
+            tc.tc_descripcion   AS "TIPO CONSULTA",
+            cm_tipo_id          AS "CODIGO",
+            COUNT(cm.cm_tipo_id) AS "CANTIDAD",
+            to_char(SUM(tc.tc_valor), '$999G999G999') AS "MONTO TOTAL",
+            EXTRACT(YEAR FROM sysdate) AS "AÑO PROCESO"
+        FROM
+            consulta_medica   cm
+            INNER JOIN tipo_consulta     tc ON cm.cm_tipo_id = tc.tc_id
+        GROUP BY
+            tc.tc_descripcion,
+            cm.cm_tipo_id
+			
+			
+----Proceso 2
+		UPDATE tipo_consulta
+SET
+    tc_valor = tc_valor - ( tc_valor * 0.25 )
+WHERE
+    tc_id IN (
+        'TC08',
+        'TC06',
+        'TC04',
+        'TC07',
+        'TC02'
+    );
