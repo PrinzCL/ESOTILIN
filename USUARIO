@@ -2,3 +2,15 @@ alter session seT "_ORACLE_SCRIPT" = true;
 create user ejemplo IDENTIFIED by "123456";
 grant connect,resource to ejemplo;
 alter user ejemplo default tablespace user quota unlimited on user;
+
+
+
+CREATE TABLE vehiculo(
+    patente varchar2(6) primary key,
+    marca VARCHAR2(20) not null,
+    modelo VARCHAR2(20) not null,
+    precio integer not null
+);
+
+insert into vehiculo values ('abcd01','Nissan','V16',3200000);
+insert into vehiculo values ('abcd02','Kia','cerato',12000000);
