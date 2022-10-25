@@ -1,6 +1,8 @@
-    import java.sql.*;
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
+    
+    
     public final void refrescarTabla(){
         try(Connection con = DriverManager.getConnection(
                 "jdbc:oracle:thin:@localhost:1521/xe", "ejemplo", "123456")){
@@ -27,4 +29,33 @@ import javax.swing.table.DefaultTableModel;
             System.out.println("Error al conectar: " + e);
         }
     }
+    
+    ---------------------- VISUALIZAR DATOS
+    
+    
+    
+    
+    
+    
+    
+    
+       private void jbtAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@localhost:1521/xe", "ejemplo", "123456")){
+            String sql = "insert into vehiculo values(?,?,?,?)";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, jtfPatente.getText());
+                ps.setString(2, jtfMarca.getText());
+                ps.setString(3, jtfModelo.getText());
+                ps.setString(4, jtfPrecio.getText());
+                ps.executeUpdate();
+                refrescarTabla();
+            }
+        }catch(Exception e){
+            System.out.println("Error al conectar: " + e);
+        }
+    
+    }       
+    
+    ------------------ AGREGAR DATOS BUTTON
     
