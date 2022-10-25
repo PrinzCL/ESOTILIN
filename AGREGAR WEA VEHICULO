@@ -1,0 +1,15 @@
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@localhost:1521/xe", "ejemplo", "123456")){
+            String sql = "insert into vehiculo values(?,?,?,?)";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1,jtfpatente.getText());
+                ps.setString(2,jtfmarca.getText());
+                ps.setString(3,jtfmodelo.getText());
+                ps.setString(4,jtfprecio.getText());
+                ps.executeUpdate();
+                refrescarTabla();
+            }
+        }catch(Exception e){
+            System.out.println("Error al conectar: " + e);
+        }
