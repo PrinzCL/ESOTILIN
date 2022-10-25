@@ -1,0 +1,4 @@
+alter session seT "_ORACLE_SCRIPT" = true;
+create user ejemplo IDENTIFIED by "123456";
+grant connect,resource to ejemplo;
+alter user ejemplo default tablespace user quota unlimited on user;
