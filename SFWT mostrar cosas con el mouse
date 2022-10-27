@@ -1,0 +1,5 @@
+int fila = jtbDatos.getSelectedRow();
+        jtfPatente.setText(jtbDatos.getValueAt(fila,0).toString());
+        jtfMarca.setText(jtbDatos.getValueAt(fila,1).toString());
+        jtfModelo.setText(jtbDatos.getValueAt(fila,2).toString());
+        jtfPrecio.setText(jtbDatos.getValueAt(fila,3).toString());
