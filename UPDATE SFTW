@@ -1,0 +1,14 @@
+       try ( Connection con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@localhost:1521/xe", "ejemplo", "123456")) {
+            String sql = "update vehiculo set marca=?,modelo=?,precio=? where patente=?";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(4, jtfPatente.getText());
+                ps.setString(1, jtfMarca.getText());
+                ps.setString(2, jtfModelo.getText());
+                ps.setString(3, jtfPrecio.getText());
+                ps.executeUpdate();
+                refrescarTabla();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al conectar: " + e);
+        }
