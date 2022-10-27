@@ -1,0 +1,11 @@
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:oracle:thin:@localhost:1521/xe", "ejemplo", "123456")) {
+            String sql = "delete from vehiculo where patente = ?";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, jtfPatente.getText());
+                ps.executeUpdate();
+                refrescarTabla();
+            }
+        } catch (Exception e) {
+            System.out.println("Error al conectar: " + e);
+        }
