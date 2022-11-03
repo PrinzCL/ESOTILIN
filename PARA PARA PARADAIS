@@ -1,0 +1,27 @@
+CREATE OR REPLACE TABLE INFORME_SIBF_CRED AS
+SELECT
+    to_char(fecha_otorga_cred, 'MM')
+    || ''
+       || to_char(fecha_otorga_cred, 'yyyy') AS "MES TRANSACCION",
+    cred.nombre_credito                   AS "TIPO CREDITO",
+    ccli.monto_solicitado                 AS "MONTO SOLICITADO CREDITO",
+    CASE
+        WHEN ccli.monto_solicitado BETWEEN 100000 AND 1000000  THEN
+            ccli.monto_solicitado * 0.01
+        WHEN ccli.monto_solicitado BETWEEN 1000001 AND 2000000 THEN
+            ccli.monto_solicitado * 0.02
+        WHEN ccli.monto_solicitado BETWEEN 2000001 AND 4000000 THEN
+            ccli.monto_solicitado * 0.03
+        WHEN ccli.monto_solicitado BETWEEN 4000001 AND 6000000 THEN
+            ccli.monto_solicitado * 0.04
+        WHEN ccli.monto_solicitado > 6000000                   THEN
+            ccli.monto_solicitado * 0.07
+    END                                   AS "APORTE AL SBIF"
+FROM
+         credito_cliente ccli
+    INNER JOIN credito cred ON ccli.cod_credito = cred.cod_credito
+WHERE
+    to_char(fecha_otorga_cred, 'YYYY') = ( to_char(sysdate, 'YYYY') - 1 )
+ORDER BY
+    to_char(fecha_otorga_cred, 'MM') ASC,
+    2 ASC;
