@@ -1,0 +1,199 @@
+
+import java.sql.*;
+import javax.swing.JOptionPane;
+
+public class Principal extends javax.swing.JFrame {
+
+    public Principal() {
+        initComponents();
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jlbPrecio = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtfCantidad = new javax.swing.JTextField();
+        jtfCodigo = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jlbNombre = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jlbStock = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbDatos = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Codigo");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(30, 50, 70, 17);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Precio");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(370, 50, 70, 17);
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Cantidad");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(430, 50, 70, 17);
+
+        jlbPrecio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbPrecio.setText("..............");
+        jPanel1.add(jlbPrecio);
+        jlbPrecio.setBounds(370, 90, 62, 20);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Stock");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(300, 50, 68, 17);
+
+        jtfCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(jtfCantidad);
+        jtfCantidad.setBounds(430, 90, 70, 23);
+
+        jtfCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtfCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfCodigoKeyReleased(evt);
+            }
+        });
+        jPanel1.add(jtfCodigo);
+        jtfCodigo.setBounds(30, 90, 60, 23);
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Nombre");
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(110, 50, 49, 17);
+
+        jlbNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbNombre.setText("...........................................");
+        jPanel1.add(jlbNombre);
+        jlbNombre.setBounds(110, 90, 170, 20);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(290, 80, 0, 0);
+
+        jlbStock.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlbStock.setText("................");
+        jPanel1.add(jlbStock);
+        jlbStock.setBounds(290, 90, 70, 20);
+
+        jButton1.setText("jButton1");
+        jPanel1.add(jButton1);
+        jButton1.setBounds(30, 430, 73, 23);
+
+        jButton2.setText("jButton2");
+        jPanel1.add(jButton2);
+        jButton2.setBounds(410, 430, 73, 23);
+
+        jtbDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtbDatos);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 140, 500, 270);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void jtfCodigoKeyReleased(java.awt.event.KeyEvent evt) {                                      
+        
+    }                                     
+
+    public void buscarProducto(){
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Minimarket","root","")){
+            
+        }catch (Exception e){
+            error("Error producido : " + e);
+        }
+    }
+    
+    
+    public void error(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje,
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Principal().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jlbNombre;
+    private javax.swing.JLabel jlbPrecio;
+    private javax.swing.JLabel jlbStock;
+    private javax.swing.JTable jtbDatos;
+    private javax.swing.JTextField jtfCantidad;
+    private javax.swing.JTextField jtfCodigo;
+    // End of variables declaration                   
+}
