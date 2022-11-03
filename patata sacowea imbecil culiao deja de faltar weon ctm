@@ -1,0 +1,37 @@
+SELECT
+    to_char(numrun, '9G999G999G999')
+    || '-'
+    || dvrun             AS "RUN CLIENTE",
+    pnombre
+    || ' '
+    || snombre
+    || ' '
+    || appaterno
+    || ' '
+    || apmaterno         AS "NOMBRE CLIENTE",
+    pro.nombre_prof_ofic AS "PROFESION U OFICIO",
+    tco.nombre_tipo_contrato AS "TIPO CONTRATO",
+    TO_CHAR(pic.monto_total_ahorrado, '$999G999G999G999') AS "MONTO TOTAL AHORRADO",
+    CASE
+    WHEN PIC.MONTO_TOTAL_AHORRADO >= 100000 AND PIC.MONTO_TOTAL_AHORRADO <= 1000000
+    THEN 'BRONCE'
+    WHEN PIC.MONTO_TOTAL_AHORRADO >= 1000001 AND PIC.MONTO_TOTAL_AHORRADO <= 4000000
+    THEN 'PLATA'
+    WHEN PIC.MONTO_TOTAL_AHORRADO >= 4000001 AND PIC.MONTO_TOTAL_AHORRADO <= 8000000
+    THEN 'SILVER'
+    WHEN PIC.MONTO_TOTAL_AHORRADO >= 8000001 AND PIC.MONTO_TOTAL_AHORRADO <= 15000000
+    THEN 'GOLD'
+    WHEN PIC.MONTO_TOTAL_AHORRADO > 15000000
+    THEN 'PLATINUM'
+    END AS "CATEGORIA CLIENTE",
+    TO_CHAR(pic.fecha_solic_prod,'YYYY') AS "AÑO DE INVERSION"
+    
+    
+FROM
+         cliente cli
+    INNER JOIN profesion_oficio pro ON cli.cod_prof_ofic = pro.cod_prof_ofic
+    INNER JOIN tipo_contrato TCO ON cli.cod_tipo_contrato = tco.cod_tipo_contrato
+    INNER JOIN producto_inversion_cliente PIC ON cli.nro_cliente = pic.nro_cliente
+    
+    WHERE TO_CHAR(pic.fecha_solic_prod, 'YYYY') = (TO_CHAR(SYSDATE,'YYYY')-1) 
+    ORDER BY cli.appaterno ASC, 5 DESC;
