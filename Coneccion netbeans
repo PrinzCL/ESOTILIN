@@ -1,0 +1,19 @@
+import java.sql.*;
+
+public class Test {
+    public static void main(String[] args) {
+        try(Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ejemplo", "root", "")){
+            System.out.println("Conexion exitosa!");
+            String sql = "insert into ususario values(?,?)";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, "pataton");
+                ps.setString(2, "3211");
+                ps.executeUpdate();
+                System.out.println("Usuario Agregado!");
+            }
+        } catch(Exception e){
+            System.out.println("Error al conectar: " + e);
+        }
+    }
+    
+}
