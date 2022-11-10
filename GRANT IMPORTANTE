@@ -20,7 +20,7 @@ GRANT SELECT ON USUARIO1.CLIENTE to rol_desarrollador;
 
 -- 3. Aisgnar el ROL al usuario
 
-GRANT rol_desarrollador TO USUARIO1;
+GRANT rol_desarrollador TO USUARIO1,USUARIO2;
 
 -----------------------------------------
 CREATE,DROP,ALTER,EXECUTE,TRUNCATE PRIVILEGIOS DE SISTEMA.
