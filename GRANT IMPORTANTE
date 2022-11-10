@@ -6,3 +6,17 @@ REVOKE CREATE SESSION FROM USUARIO1--- PARA QUITAR
 
 
 WHERE ROUND(MONTHS_BETWEEN(SYSDATE, fecha_nacimiento)/12) >=70 -- SACAR AÑOS
+
+
+-------------------------------------------------------------------------------------
+--1. Crear el ROL
+CREATE ROLE rol_desarrollador;
+
+--2. Asignar privilegios al ROL
+GRANT CREATE SESSION TO rol_desarrollador;
+GRANT CREATE TABLE TO rol_desarrollador;
+GRANT CREATE SEQUENCE TO rol_desarrollador;
+
+-- 3. Aisgnar el ROL al usuario
+
+GRANT rol_desarrollador TO USUARIO1;
