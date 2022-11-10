@@ -20,3 +20,8 @@ GRANT CREATE SEQUENCE TO rol_desarrollador;
 -- 3. Aisgnar el ROL al usuario
 
 GRANT rol_desarrollador TO USUARIO1;
+
+-----------------------------------------
+CREATE,DROP,ALTER,EXECUTE PRIVILEGIOS DE SISTEMA.
+-----------------------------------------
+SELECT,UPDATE,DELETE,INSERT,READ PRIVILEGIOS DE OBJETO 
