@@ -28,3 +28,47 @@ GRANT rol_desarrollador TO USUARIO1,USUARIO2;
 CREATE,DROP,ALTER,EXECUTE,TRUNCATE PRIVILEGIOS DE SISTEMA.
 -----------------------------------------
 SELECT,UPDATE,DELETE,INSERT,READ PRIVILEGIOS DE OBJETO 
+
+
+----------------------
+ENTDNER LA WEA
+
+
+
+GRANT SELECT ON USER1.syn_aporte TO USER2;
+GRANT SELECT ON USER1.syn_cliente TO USER2;
+GRANT SELECT ON USER1.syn_comuna TO USER2;
+GRANT SELECT ON USER1.syn_credito TO USER2;
+
+
+GRANT SELECT ON USER1.syn_credito_cliente TO USER2;
+GRANT SELECT ON USER1.syn_cuota_credito_cliente TO USER2;
+GRANT SELECT ON USER1.syn_forma_pago TO USER2;
+GRANT SELECT ON USER1.syn_movimiento TO USER2;
+GRANT SELECT ON USER1.syn_producto_inversion TO USER2;
+GRANT SELECT ON USER1.syn_producto_inversion_cliente TO USER2;
+GRANT SELECT ON USER1.syn_profesion_oficio TO USER2;
+GRANT SELECT ON USER1.syn_provincia TO USER2;
+GRANT SELECT ON USER1.syn_region TO USER2;
+GRANT SELECT ON USER1.syn_sucursal TO USER2;
+GRANT SELECT ON USER1.syn_tipo_contrato TO USER2;
+GRANT SELECT ON USER1.syn_tipo_movimiento TO USER2;
+
+GRANT ROL_USER1_VISTA TO USER2;
+
+
+GRANT UPDATE ON USER1.syn_credito_cliente TO USER2;
+GRANT UPDATE ON USER1.syn_producto_inversion_cliente TO USER2;
+GRANT UPDATE ON USER1.syn_cuota_credito_cliente TO USER2;
+
+
+GRANT SELECT ON USER1.syn_comuna TO ROl_USER3_4;
+GRANT SELECT ON USER1.syn_region TO ROl_USER3_4;
+GRANT SELECT ON USER1.syn_provincia TO ROl_USER3_4;
+GRANT SELECT ON USER1.syn_tipo_contrato TO ROl_USER3_4;
+GRANT SELECT ON USER1.syn_tipo_movimiento TO ROl_USER3_4;
+
+
+
+GRANT ROL_USER3_4 TO USER3,USER4;
+
