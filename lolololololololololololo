@@ -1,0 +1,108 @@
+
+import java.sql.*;
+
+public class PacienteModel {
+
+    private String rut;
+    private String nombre;
+    private int edad;
+    private boolean licencia;
+
+    public PacienteModel() {
+    }
+
+    public PacienteModel(String rut, String nombre, int edad, boolean licencia) {
+        this.rut = rut;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.licencia = licencia;
+    }
+
+    public boolean isLicencia() {
+        return licencia;
+    }
+
+    public void setLicencia(boolean licencia) {
+        this.licencia = licencia;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    private final String url = "jdbc:mysql://@localhost:3306/mvc";
+    private final String user = "root";
+    private final String pass = "";
+
+    public String agregar() {
+        try ( Connection con = DriverManager.getConnection(
+                url, user, pass)) {
+            String sql = "insert into paciente values(?,?,?,?)";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1,rut);
+                ps.setString(2,nombre);
+                ps.setInt(3,edad);
+                ps.setBoolean(4,licencia);
+                ps.executeUpdate();
+                return "Tilin agregade";
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+    
+    public String listar() {
+        try ( Connection con = DriverManager.getConnection(
+                url, user, pass)) {
+            String sql = "insert into paciente values(?,?,?,?)";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+    
+    public String eliminar() {
+        try ( Connection con = DriverManager.getConnection(
+                url, user, pass)) {
+            String sql = "insert into paciente values(?,?,?,?)";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+    
+    public String modificar() {
+        try ( Connection con = DriverManager.getConnection(
+                url, user, pass)) {
+            String sql = "insert into paciente values(?,?,?,?)";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+}
