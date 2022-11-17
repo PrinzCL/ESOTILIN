@@ -1,0 +1,294 @@
+package view;
+
+import controller.PacienteController;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+public class PacienteView extends javax.swing.JFrame {
+
+    DefaultTableModel dtm;
+    PacienteController controller;
+
+    public PacienteView() {
+        initComponents();
+        dtm = (DefaultTableModel) jtbDatos.getModel();
+        controller = new PacienteController();
+        model.PacienteModel.listar(dtm);
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jtfRut = new javax.swing.JTextField();
+        jtfNombre = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jtfEdad = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jchbLicencia = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtbDatos = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jlbAyuda = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(null);
+
+        jLabel1.setText("Rut");
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(20, 20, 80, 16);
+        jPanel1.add(jtfRut);
+        jtfRut.setBounds(20, 40, 140, 30);
+        jPanel1.add(jtfNombre);
+        jtfNombre.setBounds(20, 100, 140, 30);
+
+        jLabel2.setText("Nombre");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(20, 80, 80, 16);
+        jPanel1.add(jtfEdad);
+        jtfEdad.setBounds(20, 160, 40, 30);
+
+        jLabel3.setText("Edad");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(20, 140, 80, 16);
+
+        jchbLicencia.setText("Licencia");
+        jchbLicencia.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jPanel1.add(jchbLicencia);
+        jchbLicencia.setBounds(71, 160, 90, 30);
+
+        jtbDatos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Rut", "Nombre", "Edad", "Licencia"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtbDatos);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(180, 10, 453, 320);
+
+        jButton1.setBackground(new java.awt.Color(0, 155, 255));
+        jButton1.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Eliminar");
+        jButton1.setBorder(null);
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusPainted(false);
+        jButton1.setOpaque(true);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(20, 300, 140, 30);
+
+        jButton2.setBackground(new java.awt.Color(0, 155, 255));
+        jButton2.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Agregar");
+        jButton2.setBorder(null);
+        jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setFocusPainted(false);
+        jButton2.setOpaque(true);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2);
+        jButton2.setBounds(20, 220, 140, 30);
+
+        jButton3.setBackground(new java.awt.Color(0, 155, 255));
+        jButton3.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Modificar");
+        jButton3.setBorder(null);
+        jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setFocusPainted(false);
+        jButton3.setOpaque(true);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
+        jButton3.setBounds(20, 260, 140, 30);
+
+        jlbAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jlbAyuda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jlbAyuda);
+        jlbAyuda.setBounds(11, 340, 630, 40);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 652, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>                        
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        String res = controller.nuevoPaciente(
+                jtfRut.getText(),
+                jtfNombre.getText(),
+                jtfEdad.getText(),
+                jchbLicencia.isSelected());
+        model.PacienteModel.listar(dtm);
+        JOptionPane.showMessageDialog(this, res);
+
+    }                                        
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        String res = controller.modificarPaciente(
+                jtfRut.getText(),
+                jtfNombre.getText(),
+                jtfEdad.getText(),
+                jchbLicencia.isSelected());
+        model.PacienteModel.listar(dtm);
+        JOptionPane.showMessageDialog(this, res);
+    }                                        
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        String res = controller.eliminarPaciente(
+                jtfRut.getText());
+        model.PacienteModel.listar(dtm);
+        JOptionPane.showMessageDialog(this, res);
+    }                                        
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {                                      
+        jlbAyuda.setText("Agrega un nuevo paciente a la base de datos");
+        jButton2.setBackground(new Color(255,165,0));
+    }                                     
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {                                     
+        jlbAyuda.setText(":V");
+        jButton2.setBackground(new Color(0,165,255));
+    }                                    
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {                                      
+        jlbAyuda.setText("Modifica los datos de un paciente");
+        jButton3.setBackground(new Color(255,165,0));
+    }                                     
+
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {                                     
+        jlbAyuda.setText(":V");
+        jButton3.setBackground(new Color(0,165,255));
+    }                                    
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {                                      
+        jlbAyuda.setText("Elimina a un paciente en especifico");
+        jButton1.setBackground(new Color(255,165,0));
+    }                                     
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {                                     
+        jlbAyuda.setText(":V");
+        jButton1.setBackground(new Color(0,165,255));
+    }                                    
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PacienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PacienteView().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JCheckBox jchbLicencia;
+    private javax.swing.JLabel jlbAyuda;
+    private javax.swing.JTable jtbDatos;
+    private javax.swing.JTextField jtfEdad;
+    private javax.swing.JTextField jtfNombre;
+    private javax.swing.JTextField jtfRut;
+    // End of variables declaration                   
+}
