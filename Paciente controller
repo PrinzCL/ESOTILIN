@@ -1,0 +1,45 @@
+package controller;
+
+import model.PacienteModel;
+
+public class PacienteController {
+
+    public String nuevoPaciente(String rut, String nombre, String edad, boolean licencia) {
+        if (rut.length() != 10) {
+            return "Error, Ingrese rut válido!.";
+        }
+        if (nombre.isEmpty()) {
+            return "Error, complete el campo nombre!.";
+        }
+        if (!edad.matches("[0-9]+")) {
+            return "Error, ingrese edad válida!.";
+        }
+        PacienteModel p = new PacienteModel(
+                rut, nombre, Integer.parseInt(edad), licencia);
+        return p.agregar();
+    }
+
+    public String modificarPaciente(String rut, String nombre, String edad, boolean licencia) {
+        if (rut.length() != 10) {
+            return "Error, Ingrese rut válido!.";
+        }
+        if (nombre.isEmpty()) {
+            return "Error, complete el campo nombre!.";
+        }
+        if (!edad.matches("[0-9]+")) {
+            return "Error, ingrese edad válida!.";
+        }
+        PacienteModel p = new PacienteModel(
+                rut, nombre, Integer.parseInt(edad), licencia);
+        return p.modificar();
+    }
+    
+    public String eliminarPaciente(String rut) {
+        if (rut.length() != 10) {
+            return "Error, Ingrese rut válido!.";
+        }
+        PacienteModel p = new PacienteModel();
+        p.setRut(rut);
+        return p.eliminar();
+    }
+}
