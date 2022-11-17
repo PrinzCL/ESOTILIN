@@ -1,0 +1,129 @@
+package model;
+
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
+public class PacienteModel {
+
+    private String rut;
+    private String nombre;
+    private int edad;
+    private boolean licencia;
+
+    public PacienteModel() {
+    }
+
+    public PacienteModel(String rut, String nombre, int edad, boolean licencia) {
+        this.rut = rut;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.licencia = licencia;
+    }
+
+    public boolean isLicencia() {
+        return licencia;
+    }
+
+    public void setLicencia(boolean licencia) {
+        this.licencia = licencia;
+    }
+
+    public String getRut() {
+        return rut;
+    }
+
+    public void setRut(String rut) {
+        this.rut = rut;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    private static final String URL = "jdbc:mysql://@localhost:3306/mvc";
+    private static final String USER = "root";
+    private static final String PASS = "";
+
+    public String agregar() {
+        try ( Connection con = DriverManager.getConnection(
+                URL, USER, PASS)) {
+            String sql = "insert into paciente values(?,?,?,?)";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, rut);
+                ps.setString(2, nombre);
+                ps.setInt(3, edad);
+                ps.setBoolean(4, licencia);
+                ps.executeUpdate();
+                return "Paciente agregade!.";
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+
+    public String modificar() {
+        try ( Connection con = DriverManager.getConnection(
+                URL, USER, PASS)) {
+            String sql = "update paciente set nombre=?, edad=?, licencia=? where rut=?";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(4, rut);
+                ps.setString(1, nombre);
+                ps.setInt(2, edad);
+                ps.setBoolean(3, licencia);
+                ps.executeUpdate();
+                return "Paciente modificade!.";
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+
+    public String eliminar() {
+        try ( Connection con = DriverManager.getConnection(
+                URL, USER, PASS)) {
+            String sql = "delete from paciente where rut=?";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, rut);
+                ps.executeUpdate();
+                return "Paciente eliminade!.";
+            }
+        } catch (Exception e) {
+            return "Error: " + e;
+        }
+    }
+
+    public static void listar(DefaultTableModel dtm) {
+        dtm.setRowCount(0);
+        try ( Connection con = DriverManager.getConnection(
+                URL, USER, PASS)) {
+            String sql = "select * from paciente";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                try ( ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        dtm.addRow(new Object[]{
+                            rs.getString("rut"),
+                            rs.getString("nombre"),
+                            rs.getInt("edad"),
+                            rs.getBoolean("licencia")
+                        });
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+}
