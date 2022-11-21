@@ -1,0 +1,56 @@
+
+package controller;
+import model.VehiculoModel;
+
+
+public class VehiculoController {
+    
+    public String nuevoVehiculo(String patente, String marca, String modelo, String precio, boolean nuevo){
+        if(patente.length()!=6){
+            return "Error, ingrese patente valida!";
+        }
+        if(marca.isEmpty()){
+            return "Error, complete el campo marca!";
+        }
+        if(modelo.isEmpty()){
+            return "Error, complete el campo modelo";
+        }
+        if(!precio.matches("[0-9]+")){
+            return "Error, ingrese precio valido!";
+        }
+        VehiculoModel vm = new VehiculoModel(
+                patente, marca, modelo, Integer.parseInt(precio), nuevo);
+        return vm.agregarVehiculo();
+    }
+    
+    
+    
+    public String modificarVehiculo(String patente, String marca, String modelo, String precio, boolean nuevo){
+        if(patente.length()!=6){
+            return "Error, ingrese patente valida!";
+        }
+        if(marca.isEmpty()){
+            return "Error, complete el campo marca!";
+        }
+        if(modelo.isEmpty()){
+            return "Error, complete el campo modelo";
+        }
+        if(!precio.matches("[0-9]+")){
+            return "Error, ingrese precio valido!";
+        }
+        VehiculoModel vm = new VehiculoModel(
+                patente, marca, modelo, Integer.parseInt(precio), nuevo);
+        return vm.modificarVehiculo();
+    }
+    
+    
+    public String eliminarVehiculo(String patente){
+        if(patente.length()!=6){
+            return "Error, ingrese patente valida!";
+        }
+        VehiculoModel vm = new VehiculoModel();
+        vm.setPatente(patente);
+        return vm.eliminarVehiculo();
+    }
+    
+}
