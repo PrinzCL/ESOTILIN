@@ -1,0 +1,143 @@
+
+package model;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
+public class VehiculoModel {
+    
+    private String patente;
+    private String marca;
+    private String modelo;
+    private int precio;
+    private boolean nuevo;
+
+    public VehiculoModel() {
+    }
+
+    public VehiculoModel(String patente, String marca, String modelo, int precio, boolean nuevo) {
+        this.patente = patente;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.precio = precio;
+        this.nuevo = nuevo;
+    }
+
+    public boolean isNuevo() {
+        return nuevo;
+    }
+
+    public void setNuevo(boolean nuevo) {
+        this.nuevo = nuevo;
+    }
+
+    public String getPatente() {
+        return patente;
+    }
+
+    public void setPatente(String patente) {
+        this.patente = patente;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+    
+    
+    public String agregarVehiculo(){
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:mysql://@localhost:3306/taller", "root", "")){
+            String sql = "insert into vehiculo values(?,?,?,?,?)";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, patente);
+                ps.setString(2, marca);
+                ps.setString(3, modelo);
+                ps.setInt(4, precio);
+                ps.setBoolean(5, nuevo);
+                ps.executeUpdate();
+                return "Vehiculo agregado!";
+            }
+        }catch(Exception e){
+            return "error al conectar" + e;
+        }
+    }
+    
+    
+    
+    public String modificarVehiculo(){
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:mysql://@localhost:3306/taller", "root", "")){
+            String sql = "update vehiculo set marca=?, modelo=?, precio=?, nuevo=? where patente=?";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(5, patente);
+                ps.setString(1, marca);
+                ps.setString(2, modelo);
+                ps.setInt(3, precio);
+                ps.setBoolean(4, nuevo);
+                ps.executeUpdate();
+                return "Vehiculo modificado!";
+            }
+        }catch(Exception e){
+            return "error al conectar" + e;
+        }
+    }
+    
+    
+    
+    public String eliminarVehiculo(){
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:mysql://@localhost:3306/taller", "root", "")){
+            String sql = "delete from vehiculo where patente=?";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, patente);
+                ps.executeUpdate();
+                return "Vehiculo eliminado!";
+            }
+        }catch(Exception e){
+            return "error al conectar" + e;
+        }
+    }
+    
+    public static void listarVehiculos(DefaultTableModel dtm){
+        dtm.setRowCount(0);
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:mysql://@localhost:3306/taller", "root", "")){
+            String sql = "select * from vehiculo";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                try(ResultSet rs = ps.executeQuery()){
+                    while(rs.next()){
+                        dtm.addRow(new Object[]{
+                            rs.getString("patente"),
+                            rs.getString("marca"),
+                            rs.getString("modelo"),
+                            rs.getInt("precio"),
+                            rs.getBoolean("nuevo")    
+                        });
+                    }
+                }   
+            }
+        }catch(Exception e){
+            System.out.println("error al conectar" + e);
+        }
+    }
+    
+}
