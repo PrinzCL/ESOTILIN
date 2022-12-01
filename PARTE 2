@@ -1,0 +1,36 @@
+//REQUERIMIENTO 2//
+
+CREATE TABLE CONSULTA_VENDEDOR_PROPIEDADES AS 
+
+SELECT
+    vendedor_nombre                                   AS "VENDEDOR_NOMBRE",
+    to_char(sueldo_bruto, '$999G999G999')             AS "VENDEDOR_SUELDO",
+    ven.venta_fecha                                   AS "FECHA_VENTA",
+    'CLIENTE '
+    || ''
+    || c.cliente_id                                   AS cliente,
+PRO.PROPIEDAD_TIPO AS TIPO_PROPIEDAD,
+    to_char(pro.propiedad_precio, '$999G999G999G999') AS "VALOR_PROPIEDAD",
+    CASE
+        WHEN pro.propiedad_precio BETWEEN 50000000 AND 75000000   THEN
+            'propiedad_basica'
+        WHEN pro.propiedad_precio BETWEEN 75000001 AND 100000000  THEN
+            'PROPIEDAD_MEDIA'
+        WHEN pro.propiedad_precio BETWEEN 100000001 AND 180000000 THEN
+            'PROPIEDAD_ALTA'
+        WHEN pro.propiedad_precio BETWEEN 180000001 AND 300000000 THEN
+            'PROPIEDAD_SUPERIOR'
+        ELSE
+            'PROPIEDAD_NO_CLASIFICADA'
+    END                                               AS "CATEGORIA"
+FROM
+         syn_vendedor v
+    INNER JOIN syn_venta         ven ON v.vendedor_id = ven.fk_vendedor_id
+    INNER JOIN syn_cliente       c ON ven.fk_cliente_id = c.cliente_id
+    INNER JOIN syn_detalle_venta dv ON ven.venta_id = dv.fk_venta_id
+    INNER JOIN syn_propiedad     pro ON dv.fk_propiedad_id = pro.propiedad_id
+WHERE
+        v.sueldo_bruto < 550000
+    AND pro.propiedad_precio > 85000000
+ORDER BY
+    3 ASC
