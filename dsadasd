@@ -1,0 +1,76 @@
+create database AquaViva;
+
+use AquaViva;
+
+create table cliente(
+
+rut varchar(12) primary key,    
+
+    nom_completo varchar(40) not null,
+
+    direccion varchar(20) not null,
+    
+    comuna varchar(20) not null,
+
+    telefono varchar(12) not null,
+
+    correo varchar(20) not null
+
+);
+
+create table producto(
+
+codigo varchar(12) primary key,    
+
+    nombre varchar(30) not null,
+
+    cantidad varchar(20) not null,
+    
+    fecha_envasado date not null,
+
+    precio int not null
+
+);
+
+
+
+create table vendedor(
+
+rut varchar(12) primary key,    
+
+    nom_completo varchar(40) not null,
+
+    fono varchar(12) not null,
+    
+    direccion varchar(20) not null,
+
+    correo varchar(20) not null
+
+);
+
+
+
+create table venta(
+
+fecha_venta date primary key,    
+
+    fecha_entrega date not null,
+
+    cantidad varchar(20) not null,
+    
+    fecha_envasado date not null,
+
+    precio int not null,
+    
+    rut_cli varchar(12) REFERENCES cliente(rut),
+    
+    rut_ven varchar(12) REFERENCES vendedor(rut),
+    
+    cant_prod int not null,
+    
+    codigo_prod varchar(12) REFERENCES producto(codigo),
+    
+    observaciones varchar(40) not null,
+    
+    total_pago int not null
+);
