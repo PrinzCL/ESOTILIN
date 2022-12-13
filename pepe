@@ -1,0 +1,377 @@
+-------sesion
+    private void jbIniciarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        Connection con1 = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        String User = jtfUsuario.getText();
+        String Pass = jpfClave.getText();
+        if (User.equals("") || Pass.equals("")) {
+            JOptionPane.showMessageDialog(this, "Uno o mas campos estan vacios. Favor de llenarlos.");
+        } else {
+            try {
+                con1 = Conectar();
+                pst = con1.prepareStatement("select usuario, clave from usuario where usuario='" + User
+                        + "' and clave ='" + Pass + "'");
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    this.dispose();
+                    jfInicio.setVisible(true);
+                    jfInicio.pack();
+                    jlbUsuario.setText(User);
+                    jtfCodigo.requestFocus();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Credenciales incorrectas. Vuelve a intentar de nuevo.");
+                }
+            } catch (SQLException e) {
+                System.err.print(e.toString());
+                JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado.\nFavor comunicarse con el administrador.");
+            }
+        }
+    }         
+    
+------
+conectar--
+    public Connection Conectar() {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost/minimarket", "root", "");
+        } catch (SQLException e) {
+            System.err.print(e.toString());
+            JOptionPane.showMessageDialog(this, "Ocurrio un error inesperado.\nFavor comunicarse con el administrador.");
+        }
+        return con;
+    }
+-----
+listar
+     public static void listar(DefaultTableModel dtm) {
+        dtm.setRowCount(0);
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")) {
+            String sql = "select * from paciente";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                try ( ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        dtm.addRow(new Object[]{
+                            rs.getString("rut"),
+                            rs.getString("nombre"),
+                            rs.getInt("edad"),
+                            rs.getBoolean("licencia")
+                        });
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+---
+    
+   buscar 
+    public static void buscarVentas(DefaultTableModel dtm){
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")){
+            String sql = "select * from venta";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+                    dtm.addRow(new Object[]{
+                       rs.getInt("folio"),
+                       rs.getString("fecha"),
+                       rs.getInt("cantidad"),
+                       rs.getInt("total"),
+                       rs.getInt("iva"),
+                       rs.getString("vendedor")
+                    });
+                }
+            }
+            
+            }
+        }catch (Exception e){
+            System.out.println(" Error al conectar" +e);
+        }
+    }
+---
+    DefaultTableModel dtm;
+    VehiculoController controller;
+
+    public VehiculoView() {
+        initComponents();
+        controller = new VehiculoController();
+        dtm = (DefaultTableModel) jtbDatos.getModel();
+        model.VehiculoModel.listarVehiculos(dtm);
+    }
+ ----
+ agregar 
+        
+        String patente = jtfPatente.getText();
+        String marca = jtfMarca.getText();
+        String modelo = jtfModelo.getText();
+        String precio = jtfPrecio.getText();
+        boolean nuevo = jchbNuevo.isSelected();
+        String res = controller.nuevoVehiculo(patente, marca, modelo, precio, nuevo);
+        model.VehiculoModel.listarVehiculos(dtm);
+        JOptionPane.showMessageDialog(this, res, "info", HEIGHT);
+    }
+    
+  ----agrear metodo
+  
+      public String agregarVehiculo(){
+        try(Connection con = DriverManager.getConnection(
+                "jdbc:mysql://@localhost:3306/taller", "root", "")){
+            String sql = "insert into vehiculo values(?,?,?,?,?)";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, patente);
+                ps.setString(2, marca);
+                ps.setString(3, modelo);
+                ps.setInt(4, precio);
+                ps.setBoolean(5, nuevo);
+                ps.executeUpdate();
+                return "Vehiculo agregado!";
+            }
+        }catch(Exception e){
+            return "error al conectar" + e;
+        }
+    }
+    
+ ---
+    agregar
+    public void enviarInfoMed(Medico med){
+        
+        try{
+                String sql ="INSERT INTO medico(rut,nom_completo,especialidad,direccion,correo) VALUES(?,?,?,?,?);";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1,med.getRut());
+                pst.setString(2,med.getNombre() );
+                pst.setString(3,med.getEspecialidad() );
+                pst.setString(4,med.getDireccion() );
+                pst.setString(5,med.getCorreo() );
+                pst.executeUpdate();
+           
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        };
+    }
+----
+ver datos
+    public void verDatosCli(JTable tabla){
+        DefaultTableModel dtm = new DefaultTableModel();
+        String [] cadena = new String[8];
+        dtm.addColumn("ID");
+        dtm.addColumn("RUT");
+        dtm.addColumn("NOMBRE COMPLETO");
+        dtm.addColumn("DIRECCION");
+        dtm.addColumn("COMUNA");
+        dtm.addColumn("TELEFONO");
+        dtm.addColumn("CORREO");
+        dtm.addColumn("TIPO");
+        tabla.setModel(dtm);
+        
+        try{
+            String sql ="SELECT * FROM CLIENTE";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                cadena[0] = rs.getString(1);
+                cadena[1] = rs.getString(2);
+                cadena[2] = rs.getString(3);
+                cadena[3] = rs.getString(4);
+                cadena[4] = rs.getString(5);
+                cadena[5] = rs.getString(6);
+                cadena[6] = rs.getString(7);
+                cadena[7] = rs.getString(8);
+                dtm.addRow(cadena);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        };
+    }
+ ----
+ 
+        jfInicio.setVisible(true);
+        jfInicio.pack();
+        this.dispose();
+        
+----- ver datos ate
+    public void verAtexMed(String id,JTable tabla){
+        DefaultTableModel dtm = new DefaultTableModel();
+        String [] cadena = new String[7];
+        dtm.addColumn("ID");
+        dtm.addColumn("FECHA");
+        dtm.addColumn("MEDICO");
+        dtm.addColumn("MASCOTA");
+        dtm.addColumn("PROCEDIMIENTO");
+        dtm.addColumn("OBSERVACION");
+        dtm.addColumn("VALOR");
+        tabla.setModel(dtm);
+        
+        try{
+            String sql ="SELECT * FROM ATENCION WHERE medico = ? ";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, id);
+            pst.executeUpdate();
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                cadena[0] = rs.getString(1);
+                cadena[1] = rs.getString(2);
+                cadena[2] = rs.getString(3);
+                cadena[3] = rs.getString(4);
+                cadena[4] = rs.getString(5);
+                cadena[5] = rs.getString(6);
+                cadena[6] = rs.getString(7);
+                dtm.addRow(cadena);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        };
+    }
+    
+    
+            funciones.verAtexMed(ID.getText(),tabla);
+        ID.setText("");
+        
+       ----
+       buscar---
+           public static void buscarVentas(DefaultTableModel dtm){
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")){
+            String sql = "select * from venta";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+            try(ResultSet rs = ps.executeQuery()){
+                while(rs.next()){
+                    dtm.addRow(new Object[]{
+                       rs.getInt("folio"),
+                       rs.getString("fecha"),
+                       rs.getInt("cantidad"),
+                       rs.getInt("total"),
+                       rs.getInt("iva"),
+                       rs.getString("vendedor")
+                    });
+                }
+            }
+            
+            }
+        }catch (Exception e){
+            System.out.println(" Error al conectar" +e);
+        }
+    }
+    -----
+    
+        public void verificarUsuario(){
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")){
+            String sql = "select usuario from usuario where usuario = ?";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.setString(1, usuario);
+                ps.executeQuery();
+            }
+        }catch (Exception e){
+            System.out.println("Usuario no encontrado"+e);
+        }
+    }
+    
+    
+                public void verificarClave(){
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")){
+            String sql = "select clave from usuario";
+            try(PreparedStatement ps = con.prepareStatement(sql)){
+                ps.executeQuery();
+            }
+        }catch (Exception e){
+            System.out.println("Clave o usuario incorrecto"+e);
+        }
+    }
+    
+   
+   
+   
+        public static void listar(DefaultTableModel dtm) {
+        dtm.setRowCount(0);
+        try ( Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/minimarket", "root", "")) {
+            String sql = "select * from paciente";
+            try ( PreparedStatement ps = con.prepareStatement(sql)) {
+                try ( ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        dtm.addRow(new Object[]{
+                            rs.getString("rut"),
+                            rs.getString("nombre"),
+                            rs.getInt("edad"),
+                            rs.getBoolean("licencia")
+                        });
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+    
+    
+    
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            buscarProducto();
+
+            int stockProducto = Integer.parseInt(jlbStock.getText());
+            int cantidad = 1;
+            int cantidadAgregada = obtenerStockTabla(jtfCodigo.getText());
+            if (cantidad + cantidadAgregada > stockProducto) {
+                jlbVenta.setText("Stock insuficiente!.");
+                return;
+            } else {
+                jlbVenta.setText("");
+            }
+            int precio = Integer.parseInt(jlbPrecio.getText());
+            double iva = precio * cantidad * 0.19;
+            dtm.addRow(new Object[]{
+                jtfCodigo.getText(),
+                jlbNombre.getText(),
+                jlbPrecio.getText(),
+                cantidad,
+                jlbStock.getText(),
+                precio * cantidad - iva,
+                iva,});
+
+            jlbProductos.setText("" + dtm.getRowCount());
+            actualizarTotal();
+            actualizarIva();
+            actualizarSubtotal();
+            //actualizaStock();
+            if(Integer.parseInt(jlbStock.getText().toString()) < 5) {
+                JOptionPane.showMessageDialog(this, "Stock del producto bajo!");
+            }
+                    
+    }            
+    
+    
+    
+    
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import user.Usuario;
+import java.sql.*;
+import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.util.HashSet;
+import javax.swing.JTable;
+import javax.swing.text.PasswordView;
+
+public class Login extends javax.swing.JFrame {
+
+    DefaultTableModel dtm;
+    DefaultTableModel tablemodl;
+    DefaultTableModel tablestock;
+    Usuario user;
+
+    public Login() {
+        initComponents();
+        dtm = (DefaultTableModel) jtbCompras.getModel();
+        tablemodl = (DefaultTableModel) jtbVentas.getModel();
+        tablestock = (DefaultTableModel) jtbInformeStock.getModel();
+
+    }
