@@ -1,0 +1,28 @@
+DECLARE
+    v_nombre    VARCHAR2(10);
+    v_appaterno VARCHAR2(10);
+    v_apmaterno VARCHAR2(10);
+    v_rut       VARCHAR2(10);
+    v_dvrut     VARCHAR2(10);
+BEGIN
+    SELECT
+        initcap(nombre_emp),
+        initcap(appaterno_emp),
+        initcap(apmaterno_emp),
+        (numrut_emp),
+        (dvrut_emp)
+    INTO
+        v_nombre,
+        v_appaterno,
+        v_apmaterno,
+        v_rut,
+        v_dvrut
+    FROM
+        empleado
+    WHERE
+        numrut_emp = 12456905;
+
+    dbms_output.put_line('RUT: '|| to_char(v_rut, '99g999g999')||'-'|| v_dvrut);
+
+
+END;
