@@ -1,0 +1,30 @@
+DECLARE
+    v_nombre VARCHAR2(10);
+    v_apellido VARCHAR2(10);
+    v_apellido2 VARCHAR2(10);
+BEGIN
+
+    SELECT
+        INITCAP(nombre_emp)
+    INTO v_nombre
+    FROM
+        empleado
+    WHERE numrut_emp = 12466553;
+    
+    SELECT
+        INITCAP(appaterno_emp)
+    INTO v_apellido
+    FROM
+        empleado
+    WHERE numrut_emp = 12466553;
+
+    SELECT
+        INTICAP(apmaterno_emp)
+    INTO v_apellido2
+    FROM
+        empleado
+    WHERE numrut_emp = 12466553;
+
+
+    dbms_output.put_line('Hola '||v_nombre ||' '|| v_apellido ||' '|| v_apellido2);
+END;
