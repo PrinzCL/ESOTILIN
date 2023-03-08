@@ -1,0 +1,37 @@
+
+DECLARE
+    v_nombre    VARCHAR2(10);
+    v_appaterno VARCHAR2(10);
+    v_apmaterno VARCHAR2(10);
+    v_estado VARCHAR2(10);
+
+BEGIN
+    SELECT
+        emp.nombre_emp,
+        emp.appaterno_emp,
+        emp.apmaterno_emp,
+        est.desc_estcivil
+ 
+    INTO
+        v_nombre,
+        v_appaterno,
+        v_apmaterno,
+        v_estado
+ 
+    FROM
+        empleado emp
+    
+    INNER JOIN estado_civil est on emp.id_estcivil = est.id_estcivil
+    
+    WHERE emp.numrut_emp = 12466553;
+        
+     
+        
+    dbms_output.put_line('DATOS DEL CLIENTE');
+    dbms_output.put_line('--------------------------');
+    dbms_output.put_line('Nombre del empleado '|| v_nombre || ' ' || v_appaterno || ' ' || v_apmaterno);
+    dbms_output.put_line('Estado: '||v_estado);
+    
+
+
+END;
