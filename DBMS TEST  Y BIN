@@ -1,0 +1,87 @@
+SET SERVEROUTPUT OFF;
+DECLARE
+    v_nombre    VARCHAR2(10);
+    v_appaterno VARCHAR2(10);
+    v_apmaterno VARCHAR2(10);
+    v_rut       VARCHAR2(10);
+    v_dvrut     VARCHAR2(10);
+    v_edad      VARCHAR2(10);
+    v_correo    VARCHAR2(20);
+BEGIN
+    SELECT
+        initcap(nombre_emp),
+        initcap(appaterno_emp),
+        initcap(apmaterno_emp),
+        numrut_emp,
+        dvrut_emp,
+        trunc(months_between(sysdate,fecnac_emp) / 12),
+        LOWER(SUBSTR(nombre_emp,1, 2)||'.'||SUBSTR(appaterno_emp,1,2)||'.'|| SUBSTR(apmaterno_emp,-2)||'@gmail.com')
+    INTO
+        v_nombre,
+        v_appaterno,
+        v_apmaterno,
+        v_rut,
+        v_dvrut,
+        v_edad,
+        v_correo
+    FROM
+        empleado
+    WHERE
+        numrut_emp = 12466553;
+
+    dbms_output.put_line('BUSCADOR DE EMPLEADOS 2000');
+    dbms_output.put_line('--------------------------');
+    
+    dbms_output.put_line('RUT:'|| to_char(v_rut, '99g999g999')||'-'|| v_dvrut);
+    dbms_output.put_line('Nombre: '|| v_nombre);
+    dbms_output.put_line('Apellido Paterno: '|| v_appaterno);
+    dbms_output.put_line('Apellido Materno: '|| v_apmaterno);
+    dbms_output.put_line('Edad: '|| v_edad);
+    dbms_output.put_line('Correo: '|| v_correo);
+
+END;
+
+
+------BIN-----
+VARIABLE b_bono NUMBER;
+EXEC :b_bono := &BONO;
+
+VARIABLE b_rut VARCHAR2;
+EXEC :b_rut := &RUT;
+
+
+DECLARE
+    v_nombre    VARCHAR2(10);
+    v_appaterno VARCHAR2(10);
+    v_apmaterno VARCHAR2(10);
+    v_rut       VARCHAR2(10);
+    v_dvrut     VARCHAR2(10);
+    v_sueldo    empleado.sueldo_emp%type;
+    v_correo    VARCHAR2(20);
+BEGIN
+    SELECT
+        nombre_emp,
+        appaterno_emp,
+        apmaterno_emp,
+        numrut_emp,
+        dvrut_emp,
+        sueldo_emp
+    INTO
+        v_nombre,
+        v_appaterno,
+        v_apmaterno,
+        v_rut,
+        v_dvrut,
+        v_sueldo
+    FROM
+        empleado
+    WHERE
+        numrut_emp = :b_rut;
+
+    dbms_output.put_line('DATOS CALCULO BONIFICACION EXTRA DEL ' || :b_bono);
+    dbms_output.put_line('--------------------------');
+    dbms_output.put_line('Nombre del empleado '|| v_nombre || ' ' || v_appaterno || ' ' || v_apmaterno);
+    dbms_output.put_line('RUT:' ||v_rut||'-'|| v_dvrut);
+    dbms_output.put_line('Sueldo:' ||v_sueldo);
+    
+END;
