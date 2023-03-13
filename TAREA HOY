@@ -1,0 +1,22 @@
+
+DECLARE
+    v_filas_elim VARCHAR2(30);
+    v_empno empleado_copia.numrun_emp%TYPE := &RUT;
+    v_nombre VARCHAR2(20);
+    v_apellido VARCHAR2(20);
+    v_sueldo VARCHAR2(20);
+BEGIN    
+    DELETE FROM empleado_copia
+    WHERE
+        numrun_emp = v_empno;
+
+    v_filas_elim := ( SQL%rowcount
+                      || ' fila(s) eliminada(s).' );                  
+    dbms_output.put_line('EL ELIMINADOR DE PAPUS :V');
+    dbms_output.put_line('*-----------------------*');
+    dbms_output.put_line('*Rut:*' ||' '|| v_empno);
+    dbms_output.put_line('*-----------------------*');
+    dbms_output.put_line('*-----------------------*');
+    dbms_output.put_line('*-----------------------*');
+    COMMIT;
+END;
