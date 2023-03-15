@@ -1,0 +1,52 @@
+VARIABLE b_run NUMBER;
+EXEC :b_run := &RUT;
+
+
+DECLARE
+    v_filas_elim VARCHAR2(30);
+    v_dvrut      VARCHAR2(20);
+    v_nombre     VARCHAR2(20);
+    v_apellido   VARCHAR2(20);
+    v_sueldo     VARCHAR2(20);
+BEGIN
+    SELECT
+        NUMRUN_EMP,
+        dvrun_emp,
+        initcap(pnombre_emp),
+        initcap(appaterno_emp),
+        sueldo_base
+    INTO
+        :b_run,
+        v_dvrut,
+        v_nombre,
+        v_apellido,
+        v_sueldo
+    FROM
+        empleado_copia
+    WHERE
+        numrun_emp = :b_run;
+
+    DELETE FROM empleado_copia
+    WHERE
+        numrun_emp = :b_run;
+    v_filas_elim := SQL%rowcount;
+    
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+
+    
+    
+    if v_filas_elim > 0 then
+    dbms_output.put_line('EL ELIMINADOR DE EMPLEADOS');
+    dbms_output.put_line('*-----------------------*');
+    dbms_output.put_line(' Rut: '|| ''|| trim(to_char(:b_run, '99g999g999'))|| '-'|| v_dvrut);
+    dbms_output.put_line(' Nombre: '|| ''|| trim(v_nombre));
+    dbms_output.put_line(' Apellido: '|| ''|| trim(v_apellido));
+    dbms_output.put_line(' Sueldo: '|| ''|| trim(to_char(v_sueldo, '$999g999g999')));
+    dbms_output.put_line('*-----------------------*');
+    else
+    dbms_output.put_line('EL ELIMINADOR DE EMPLEADOS NO HA REALIZADO CAMBIOS');
+    end if;
+END;
+
+
