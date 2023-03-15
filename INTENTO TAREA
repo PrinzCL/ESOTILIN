@@ -1,0 +1,37 @@
+VARIABLE b_patente VARCHAR2;
+EXEC :b_patente := &PATENTE;
+
+
+DECLARE
+    v_anio VARCHAR2(20);
+    v_arriendo_dia   VARCHAR2(20);
+    v_garantia_dia   VARCHAR2(20);
+
+BEGIN
+    SELECT
+        anio,
+        nro_patente,
+        valor_arriendo_dia,
+        valor_garantia_dia
+        
+    INTO
+        v_anio,
+        :b_patente,
+        v_arriendo_dia,
+        v_garantia_dia
+    FROM
+        CAMION
+   
+    WHERE nro_patente = :b_patente;
+    
+
+        
+        
+
+    dbms_output.put_line(v_anio);
+    dbms_output.put_line(:b_patente);
+    dbms_output.put_line(v_arriendo_dia);
+    dbms_output.put_line(v_garantia_dia);
+    dbms_output.put_line('*-----------------------*');
+
+END;
