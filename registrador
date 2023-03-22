@@ -1,0 +1,36 @@
+VARIABLE b_run VARCHAR2;
+EXEC :b_run := &RUT;
+
+DECLARE
+    v_dv     VARCHAR2(1);
+    v_nombre VARCHAR(30);
+    v_edad   NUMBER(2);
+BEGIN
+    SELECT
+        dvrun,
+        initcap(pnombre
+                || ' '
+                || appaterno
+                || ' '
+                || apmaterno) AS "NOMBRE COMPLETO",
+        trunc(months_between(sysdate, fecha_nacimiento) / 12)
+    INTO
+        v_dv,
+        v_nombre,
+        v_edad
+    FROM
+        cliente
+    WHERE
+        numrun = b_run;
+
+    INSERT INTO registro_cliente (
+        edad,
+        nombre_completo,
+        run
+    ) VALUES (
+        :b_run,
+        :v_nombre,
+        :v_edad
+    );
+
+END;
