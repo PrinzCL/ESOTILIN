@@ -1,0 +1,56 @@
+VARIABLE B_NRO_CLI NUMBER;
+EXEC :B_NRO_CLI := &NRO_CLIENTE
+
+DECLARE
+    v_rut            VARCHAR2(20);
+    v_nombre         VARCHAR2(60);
+    v_profesion      VARCHAR2(60);
+    v_cumpleannio    VARCHAR2(60);
+    v_monto_ahorrado VARCHAR2(60);
+BEGIN
+    SELECT
+        c.numrun
+        || '-'
+        || c.dvrun,
+        initcap(c.pnombre
+                || ' '
+                || c.snombre
+                || ' '
+                || c.appaterno
+                || ' '
+                || c.apmaterno),
+        po.nombre_prof_ofic,
+        c.fecha_nacimiento,
+        pic.monto_total_ahorrado
+    INTO
+        v_rut,
+        v_nombre,
+        v_profesion,
+        v_cumpleannio,
+        v_monto_ahorrado
+    FROM
+             cliente c
+        INNER JOIN profesion_oficio           po ON po.cod_prof_ofic = c.cod_prof_ofic
+        INNER JOIN producto_inversion_cliente pic ON pic.nro_cliente = c.nro_cliente
+    WHERE
+        c.nro_cliente = :b_nro_cli;
+
+    /*dbms_output.put_line('NRO_CLIENTE:'
+                         || ' '
+                         || :b_nro_cli);
+    dbms_output.put_line('RUT:'
+                         || ' '
+                         || v_rut);
+    dbms_output.put_line('NOMBRE:'
+                         || ' '
+                         || v_nombre);
+    dbms_output.put_line('PROFESION:'
+                         || ' '
+                         || v_profesion);
+    dbms_output.put_line('CUMPLEANNIO:'
+                         || ' '
+                         || v_cumpleannio);
+    dbms_output.put_line('MONTO AHORRADO:'
+                         || ' '
+                         || v_monto_ahorrado);*/
+END;
