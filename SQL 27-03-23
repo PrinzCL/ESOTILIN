@@ -1,0 +1,24 @@
+declare
+    v_numero number(2) :=1;
+    v_multiplicador number(2) :=1;
+    v_numtabla number(2) :=1;
+    
+begin 
+    while v_numero <= &Multiplicador loop
+    v_multiplicador := &CUAL_TABLA;
+    v_numtabla := &HASTA;
+    dbms_output.put_line(v_multiplicador || '' || ' x ' || '' || v_numero ||' '|| '=' || ' ' ||v_numero*v_multiplicador); 
+    
+    v_numero := v_numero + 1;
+    end loop;
+end;
+
+---------------------------------------------------------------------------------------------------------------------------------
+SELECT
+    trunc(AVG(sueldo_base)),
+    min(id_emp),
+    max(id_emp),
+    count(id_emp)
+FROM
+    empleado;
+---------------------------------------------------------------------------------------------------------------------------------
