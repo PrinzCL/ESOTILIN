@@ -1,0 +1,35 @@
+
+DECLARE
+V_SUELDO_PROM NUMBER(7);
+V_MIN NUMBER(4);
+V_MAX NUMBER(3);
+
+BEGIN
+
+SELECT
+ TRUNC(AVG(SUELDO_EMP)),
+ MIN(ID_EMP),
+ MAX(ID_EMP)
+ 
+ INTO
+ V_SUELDO_PROM,
+ V_MIN,
+ V_MAX
+ 
+FROM
+    empleado;
+    WHILE V_MIN < V_MAX LOOP
+    UPDATE empleado
+SET
+    sueldo_base = sueldo_base + 50000
+WHERE
+    sueldo_base < (
+        SELECT
+            trunc(AVG(sueldo_base))
+        FROM
+            empleado
+    ) AND ID_EMP = V_MIN;
+    V_MIN := V_MIN+10;
+    END LOOP;
+    
+END;
