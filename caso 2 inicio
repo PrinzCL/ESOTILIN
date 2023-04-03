@@ -1,0 +1,36 @@
+DECLARE
+    v_id_emp     NUMBER(3);
+    v_run_emp    VARCHAR2(14);
+    v_dvrun      VARCHAR2(2);
+    v_nombre_emp VARCHAR2(60);
+    v_estado_civil varchar2(1);
+    
+    
+BEGIN
+    SELECT
+        id_emp,
+        numrun_emp,
+        dvrun_emp,
+        pnombre_emp
+        || ' '
+        || snombre_emp
+        || ' '
+        || appaterno_emp
+        || ' '
+        || apmaterno_emp,
+        substr(ec.nombre_estado_civil,1 ,1)
+    INTO
+        v_id_emp,
+        v_run_emp,
+        v_dvrun,
+        v_nombre_emp,
+        v_estado_civil
+    FROM
+        empleado e
+        inner join estado_civil ec ON ec.id_estado_civil = e.id_estado_civil
+        
+        where id_emp = &id;
+        
+    dbms_output.put_line('eso tilin '||' '||v_id_emp||' '||v_run_emp||'-'||v_dvrun||' '||v_nombre_emp||' '||v_estado_civil||''||substr(v_nombre_emp,1,3));
+
+END;
