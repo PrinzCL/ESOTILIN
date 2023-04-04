@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Floreria los Tilines </title>
+  <link rel="icon" href="images/icon.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <!-- Cargar CSS de Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="estilo.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Popper.js -->
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- ESTO ES LA BARRA DE NAVEGACION -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html"><img src="images/icons8_spa_flower_50px.png" alt="Carrito">Florería los Tilines</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="carrito.html">Catálogo</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="sobre-nosotros.html">Sobre nosotros</a>
+        </li>
+      </ul>
+    </div>
+    <a class="historial" href="historial.html"><img src="images/icons8_Order_History_50px.png" alt="Historial"></a>
+    <a class="compra" href="carrito.html"><img src="images/icons8_shopping_cart_50px.png" alt="Carrito"></a>
+    <a class="login" href="login.html"><img src="images/icons8_male_user_50px.png" alt="Login"></a>
+  </nav>
+
+  <!-- Encabezado de la página -->
+  <div class="jumbotron">
+    <h1 class="display-4">Bienvenido a Florería los Tilines</h1>
+    <p class="lead">Tienda especializada en los arreglos florales para cada ocasión.</p>
+    <p></p>
+    <hr class="my-4">
+    <a class="btn btn-primary btn-lg" href="carrito.html" role="button">Tienda</a>
+  </div>
+  <!-- Contenido de la página -->
+  <div class="container">
+    <h2 id=ofertas>Productos en Oferta</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img class="card-img-top" src="images/flores/DSC0130.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Arreglo Floral Purpura</h5>
+            <p class="card-text">Arreglo con resaltes de flores purpuras</p>
+            <a href="carrito.html" class="btn btn-primary">Comprar</a>
+            <span class="card-text">$32.990</span>
+            <span class="oferta">$38.990</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img class="card-img-top" src="images/flores/g7.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Arreglo Floral Rosas</h5>
+            <p class="card-text">Arreglo enfocado en el uso de rosas</p>
+            <a href="carrito.html" class="btn btn-primary">Comprar</a>
+            <span class="card-text">$37.990 </span>
+            <span class="oferta">$43.990</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <img class="card-img-top" src="images/flores/DSC0183.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Arreglo Floral Pastel</h5>
+            <p class="card-text">Arreglo enfocado en los colores pastel</p>
+            <a href="carrito.html" class="btn btn-primary">Comprar</a>
+            <span class="card-text">$35.990</span>
+            <span class="oferta">39.990</span>
+
+          </div>
+
+        </div>
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <div id="myCarousel" class="carousel slide mx-auto text-center carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="images/flores/Como-hacer-un-arreglo-floral-con-lirios-en-tan-solo-seis-pasos-1250x750.jpg" class="d-block w-100" alt="Imagen 1">
+      </div>
+      <div class="carousel-item">
+        <img src="images/flores/ARREGLOFLORALEVA4_1024x1024.jpg" class="d-block w-100" alt="Imagen 2">
+      </div>
+      <div class="carousel-item">
+        <img src="images/flores/1648827715 (1).jpg" class="d-block w-100" alt="Imagen 3">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+    </button>
+  </div>
+  <footer>
+    <div class="container-footer">
+      <div class="row-footer">
+        <div class="col-md-6">
+          <h3>Enlaces útiles</h3>
+          <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Acerca de nosotros</a></li>
+            <li><a href="#">Productos</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <h3>Contacto</h3>
+          <ul>
+            <li><i class="fa fa-map-marker"></i> Calle Tilin #420, TilinCity, Tilin</li>
+            <li><i class="fa fa-phone"></i> +56 9 9928 9720</li>
+            <li><i class="fa fa-phone"></i> +56 9 3727 3760</li>
+            <li><i class="fa fa-envelope"></i> info@tilin.com</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="copy">
+      <p>&copy; 2023 TilinCorp | Todos los derechos reservados | All rights reserved |</p>
+    </div>
+  </footer>
+
+</body>

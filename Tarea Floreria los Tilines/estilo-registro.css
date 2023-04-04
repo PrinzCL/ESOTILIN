@@ -1,0 +1,194 @@
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #ffe5ff;
+  background: url(images/flores/fd15j5bhdb4d91s3.jpg) no-repeat center top;
+
+}
+
+.register-box {
+    width: 320px;
+    height: 550px;
+    background: #ff006a;
+    color: #ffffff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+  }
+  
+  .register-box .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -50px;
+    left: calc(50% - 50px);
+  }
+
+  .compra>img {
+    display: flex;
+    float: right;
+    margin: 0px 20px;
+}
+
+.historial>img {
+    display: flex;
+    float: right;
+    margin: 0px 20px;
+}
+  
+  .register-box h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+  }
+  
+  .register-box label {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    display: block;
+    color: #ffffff;
+  }
+  
+  .register-box input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .register-box input[type="text"], .register-box input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #ffffff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #ffffff;
+    font-size: 16px;
+  }
+  
+  .register-box input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    border-radius: 20px;
+  }
+  
+  .register-box input[type="submit"]:hover {
+    cursor: pointer;
+    background: #ffffff;
+    color: #000;
+  }
+  
+  .register-box a {
+    display: flex;
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 10px;
+    color: rgb(255, 255, 255);
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+  
+  .register-box a:hover {
+    color: #fff;
+  }
+
+body>nav {
+    background-image: linear-gradient(90deg, #ff006a, #fc598a);
+    border-bottom: 3px #000000 solid;
+    font-size: 20px;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    font-style: bold;
+}
+
+.nav-link{
+    color: #ffffff;
+}
+.navbar-light .navbar-brand  {
+    color: #ffffff;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+.navbar-light .navbar-nav .active>.nav-link{
+    color: #ffffff;
+}
+
+.navbar-light:hover .navbar-nav:hover .active>.nav-link:hover{
+    color: #000000;
+}
+
+.navbar-brand>img{
+    width: 40px;
+    height: 40px;
+    padding: 3px 3px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.jumbotron{
+    background-color: #ffe5ff;
+    text-align: center;
+}
+
+.jumbotron>a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    background-color: #ff006a;
+    line-height: 50px;
+    display: inline-block;
+}
+
+.jumbotron>a:hover{
+    color: #ffffff;
+    background-color: #a50045;
+    transition-duration: 0.3s;
+}
+
+.nav-link>img {
+    width: 80%;
+    height: 80%;
+
+}
+
+.nav-item {
+    display: flex;
+
+}
+
+.login>img {
+    display: flex;
+    float: right;
+    margin: 0px 20px;
+}
+
+.btn-contraolv{
+  border: none;
+  justify-content: center;
+  display: flex;
+  background-color: #ff006a;
+  color: #ffffff;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  flex-direction: column;
+  margin-left: 30px;
+}
