@@ -1,0 +1,144 @@
+VARIABLE b_anio_proceso NUMBER;
+EXEC :b_anio := &AÑO;
+VARIABLE b_mes_proceso NUMBER;
+EXEC :b_mes := &MES;
+
+DECLARE
+    v_id_min              NUMBER(4);
+    v_id_max              NUMBER(4);
+    v_cod_emp             NUMBER(5);
+    v_numrut_emp          NUMBER(14);
+    v_sueldo_emp          NUMBER(12);
+    v_asig_annios         NUMBER(16);
+    v_valor_carg_familiar NUMBER(16);
+    v_cant_carga_emp      NUMBER(2);
+    v_valor_movilizacion  NUMBER(16);
+    v_movi_extra          NUMBER(16);
+    v_valor_comision      NUMBER(16);
+    v_valor_descuento_afp NUMBER(16);
+    v_valor_escolaridad   NUMBER(16);
+
+BEGIN
+    SELECT
+        MIN(cod_emp),
+        MAX(cod_emp)
+    INTO
+        v_id_min,
+        v_id_max
+    FROM
+        empleado;
+
+    WHILE v_id_min <= v_id_max LOOP
+        SELECT
+            e.cod_emp,
+            e.numrut_emp,
+            e.sueldo_base_emp,
+            CASE
+                WHEN ( months_between(
+                    sysdate,
+                    e.fecing_emp
+                ) / 12 ) BETWEEN 1 AND 10  THEN
+                    ( e.sueldo_base_emp * 0.04 )
+                WHEN ( months_between(
+                    sysdate,
+                    e.fecing_emp
+                ) / 12 ) BETWEEN 10 AND 12 THEN
+                    ( e.sueldo_base_emp * 0.06 )
+                WHEN ( months_between(
+                    sysdate,
+                    e.fecing_emp
+                ) / 12 ) BETWEEN 13 AND 16 THEN
+                    ( e.sueldo_base_emp * 0.07 )
+                WHEN ( months_between(
+                    sysdate,
+                    e.fecing_emp
+                ) / 12 ) > 16              THEN
+                    ( e.sueldo_base_emp * 0.10 )
+                ELSE
+                    0
+            END AS valor_asig_annios,
+            CASE
+                WHEN sueldo_base_emp BETWEEN 100000 AND 300000   THEN
+                    ( sueldo_base_emp * 0.50 )
+                WHEN sueldo_base_emp BETWEEN 300001 AND 1000000  THEN
+                    ( sueldo_base_emp * 0.30 )
+                WHEN sueldo_base_emp BETWEEN 1000001 AND 2500000 THEN
+                    ( sueldo_base_emp * 0.20 )
+                WHEN sueldo_base_emp BETWEEN 2500001 AND 8000000 THEN
+                    ( sueldo_base_emp * 0.05 )
+                ELSE
+                    0
+            END AS valor_movi,
+            CASE
+                WHEN id_comuna = 121
+                     OR id_comuna = 80
+                     OR id_comuna = 92 THEN
+                    30000
+                WHEN id_comuna = 118
+                     OR id_comuna = 124
+                     OR id_comuna = 117
+                     OR id_comuna = 114
+                     OR id_comuna = 122
+                     OR id_comuna = 119 THEN
+                    45000
+                ELSE
+                    0
+            END AS movi_extra,
+            CASE
+                WHEN id_escolaridad = 10 THEN
+                    ( sueldo_base_emp * 0.02 )
+                WHEN id_escolaridad = 20 THEN
+                    ( sueldo_base_emp * 0.04 )
+                WHEN id_escolaridad = 30 THEN
+                    ( sueldo_base_emp * 0.06 )
+                WHEN id_escolaridad = 40 THEN
+                    ( sueldo_base_emp * 0.08 )
+                WHEN id_escolaridad = 50 THEN
+                    ( sueldo_base_emp * 0.10 )
+                WHEN id_escolaridad = 60 THEN
+                    ( sueldo_base_emp * 0.12 )
+            END AS valor_escolaridad
+        INTO
+            v_cod_emp,
+            v_numrut_emp,
+            v_sueldo_emp,
+            v_asig_annios,
+            v_valor_movilizacion,
+            v_movi_extra,
+            v_valor_escolaridad
+        FROM
+            empleado e
+        WHERE
+            cod_emp = v_id_min;
+
+        INSERT INTO haber_calc_mes (
+            cod_emp,
+            numrut_emp,
+            mes_proceso,
+            anno_proceso,
+            valor_sueldo_base,
+            valor_asig_annos,
+            valor_cargas_fam,
+            valor_movilizacion,
+            valor_colacion,
+            valor_com_ventas,
+            valor_asig_escolaridad
+        ) VALUES (
+            v_id_min,
+            v_numrut_emp,
+            :b_mes_proceso,
+            :b_annio_proceso,
+            v_sueldo_base_emp,
+            v_asig_annios,
+            "0",
+            v_valor_movilizacion+v_movi_extra,
+            "$65.000",
+            :v9,
+            v_
+        );
+
+
+        v_id_min := v_id_min + 10;
+    END LOOP;
+
+END;
