@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function sumar(){
+            var num1 = parseInt(document.getElementById("numero1").value);
+            var num2 = parseInt(document.getElementById("numero2").value);
+            alert("La suma de los numero es: "+(num1+num2) );
+        }
+
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <label for="numero1">Numero 1: </label>
+    <input type="text" name="numero1" id="numero1">
+    <label for="numero2">Numero 2: </label>
+    <input type="text" name="numero2" id="numero2">
+    <button onclick="sumar()">Sumar</button>
+</body>
+</html>
