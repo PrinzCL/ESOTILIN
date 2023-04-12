@@ -1,0 +1,160 @@
+VARIABLE b_fecha_proceso VARCHAR2(7);
+EXEC :b_fecha_proceso := '&FECHA';
+
+DECLARE
+    v_id_min                 NUMBER(4);
+    v_id_max                 NUMBER(4);
+    v_rut_empleado           NUMBER(8);
+    v_sueldo_base            NUMBER(7);
+    v_valor_asignacion_anios NUMBER(7);
+    v_valor_carga_familiar   NUMBER(7);
+    v_valor_movilizacion     NUMBER(7);
+    v_valor_comision         NUMBER(7);
+    v_descuento_afp          NUMBER(7);
+    v_descuento_salud        NUMBER(7);
+    v_valor_escolaridad      NUMBER(7);
+    v_anios_trabajado        NUMBER(2);
+    v_porcentaje_salud       NUMBER(2);
+    v_id_escolaridad         NUMBER(2);
+    v_cod_salud              NUMBER(3, 1);
+    v_cod_afp                NUMBER(2);
+    v_id_comuna              NUMBER(3);
+    v_carga_familiar         NUMBER(6) := 4500;
+    v_colacion               NUMBER(6) := 40000;
+BEGIN
+    EXECUTE IMMEDIATE ( 'TRUNCATE TABLE HABER_CALC_MES' );
+    EXECUTE IMMEDIATE ( 'TRUNCATE TABLE DESCTO_CALC_MES' );
+    SELECT
+        MIN(cod_emp),
+        MAX(cod_emp)
+    INTO
+        v_id_min,
+        v_id_max
+    FROM
+        empleado;
+
+    WHILE v_id_min <= v_id_max LOOP
+        SELECT
+            numrut_emp,
+            sueldo_base_emp,
+            trunc(months_between(sysdate, fecing_emp) / 12),
+            id_escolaridad,
+            id_comuna,
+            cod_salud,
+            cod_afp
+        INTO
+            v_rut_empleado,
+            v_sueldo_base,
+            v_anios_trabajado,
+            v_id_escolaridad,
+            v_id_comuna,
+            v_cod_salud,
+            v_cod_afp
+        FROM
+            empleado
+        WHERE
+            cod_emp = v_id_min;
+
+        SELECT
+            v_sueldo_base * ( porc_bonif / 100 )
+        INTO v_valor_asignacion_anios
+        FROM
+            porc_bonif_annos_contrato
+        WHERE
+            v_anios_trabajado BETWEEN annos_cont_inf AND annos_cont_sup;
+
+        SELECT
+            round(v_sueldo_base *(porc_mov / 100))
+        INTO v_valor_movilizacion
+        FROM
+            porc_movilizacion
+        WHERE
+            v_sueldo_base BETWEEN sueldo_base_inf AND sueldo_base_sup;
+
+        CASE
+            WHEN v_id_comuna IN ( 92, 80, 121 ) THEN
+                v_valor_movilizacion := v_valor_movilizacion + 30000;
+            WHEN v_id_comuna IN ( 114, 117, 118, 119, 124,
+                                  122 ) THEN
+                v_valor_movilizacion := v_valor_movilizacion + 45000;
+            ELSE
+                v_valor_movilizacion := v_valor_movilizacion + 0;
+        END CASE;
+
+        SELECT
+            COUNT(*) * v_carga_familiar
+        INTO v_valor_carga_familiar
+        FROM
+            carga_familiar
+        WHERE
+            cod_emp = v_id_min;
+
+        SELECT
+            nvl(SUM(cv.valor_comision),
+                0)
+        INTO v_valor_comision
+        FROM
+                 comision_venta cv
+            INNER JOIN boleta b ON cv.nro_boleta = b.nro_boleta
+        WHERE
+                b.cod_emp = v_id_min
+            AND to_char(b.fecha_boleta, 'MM/YYYY') = :b_fecha_proceso;
+
+        SELECT
+            round(v_sueldo_base *(porc_asig_escolaridad / 100))
+        INTO v_valor_escolaridad
+        FROM
+            asig_escolaridad
+        WHERE
+            v_id_escolaridad = id_escolaridad;
+
+        v_descuento_afp := round((v_sueldo_base + v_valor_comision + v_valor_carga_familiar + v_valor_escolaridad) *(v_cod_afp / 100)
+        );
+
+        v_descuento_salud := round((v_valor_asignacion_anios + v_valor_movilizacion) *(v_cod_salud / 100));
+        INSERT INTO haber_calc_mes (
+            cod_emp,
+            numrut_emp,
+            mes_proceso,
+            anno_proceso,
+            valor_sueldo_base,
+            valor_asig_annos,
+            valor_cargas_fam,
+            valor_movilizacion,
+            valor_colacion,
+            valor_com_ventas,
+            valor_asig_escolaridad
+        ) VALUES (
+            v_id_min,
+            v_rut_empleado,
+            substr(:b_fecha_proceso, 1, 2),
+            substr(:b_fecha_proceso, - 4),
+            v_sueldo_base,
+            v_valor_asignacion_anios,
+            v_valor_carga_familiar,
+            v_valor_movilizacion,
+            v_colacion,
+            v_valor_comision,
+            v_valor_escolaridad
+        );
+
+        INSERT INTO descto_calc_mes (
+            cod_emp,
+            numrut_emp,
+            mes_proceso,
+            anno_proceso,
+            valor_salud,
+            valor_afp
+        ) VALUES (
+            v_id_min,
+            v_rut_empleado,
+            substr(:b_fecha_proceso, 1, 2),
+            substr(:b_fecha_proceso, - 4),
+            v_descuento_salud,
+            v_descuento_afp
+        );
+
+        v_id_min := v_id_min + 10;
+    END LOOP;
+
+END;
