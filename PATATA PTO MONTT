@@ -1,0 +1,68 @@
+DECLARE
+    CURSOR cur_datos_medico IS
+    SELECT
+        m.med_run                                             run_medico,
+        m.sueldo_base                                         sueldo_base,
+        round(months_between(sysdate, m.fecha_contrato) / 12) annos_trab,
+        em.esp_id                                             especialidad
+    FROM
+             medico m
+        INNER JOIN especialidad_medico em ON ( m.med_run = em.med_run )
+    ORDER BY
+        m.med_run;
+
+    v_sueldo_base NUMBER(8);
+    v_bonif_annos NUMBER(8);
+    v_bonif_esp_med number(8);
+    
+    TYPE tp_varray_bonif_annos IS VARRAY(4) OF Number(8);
+   varray_bonif_annos  tp_varray_bonif_annos;
+   v_cantidad NUMBER(8);
+   
+   TYPE tp_varray_bonif_esp IS VARRAY(3) OF Number(8);
+   varray_bonif_esp  tp_varray_bonif_esp;
+   v_cantidad NUMBER(8);
+BEGIN
+    varray_bonif_annos:= tp_varray_bonif_annos('50000',' 100000','150000','200000');
+
+    varray_bonif_esp:= tp_varray_bonif_esp('200000','250000','300000');
+
+    FOR reg_datos_medico IN cur_datos_medico LOOP
+        v_bonif_annos := 0;
+        v_sueldo_base := 0;
+        v_bonif_esp_med := 0;
+        IF reg_datos_medico.annos_trab BETWEEN 1 AND 5 THEN
+            v_bonif_annos := varray_bonif_annos(1);
+        ELSIF reg_datos_medico.annos_trab BETWEEN 6 AND 10 THEN
+            v_bonif_annos :=varray_bonif_annos(2);
+        ELSIF reg_datos_medico.annos_trab BETWEEN 11 AND 15 THEN
+           v_bonif_annos :=varray_bonif_annos(3);
+        ELSIF reg_datos_medico.annos_trab >= 16 THEN
+            v_bonif_annos :=varray_bonif_annos(4);
+        ELSE
+            v_bonif_annos := 0;
+        END IF;
+        IF reg_datos_medico.especialidad = 100 THEN
+            v_bonif_esp_med := varray_bonif_esp(1);
+        ELSIF reg_datos_medico.especialidad = 700 THEN
+            v_bonif_esp_med := varray_bonif_esp(2);
+        ELSIF reg_datos_medico.especialidad = 1100 THEN
+            v_bonif_esp_med := varray_bonif_esp(3);
+        ELSE
+            v_bonif_esp_med := 0;
+        END IF;
+
+        v_sueldo_base := reg_datos_medico.sueldo_base + v_bonif_annos + v_bonif_esp_med;
+        IF v_sueldo_base > 0 THEN
+            UPDATE medico
+            SET
+                sueldo_base = v_sueldo_base,
+                BONIF_ESP = v_bonif_esp_med,
+                bonif_annos = v_bonif_annos
+            WHERE
+                med_run = reg_datos_medico.run_medico;
+
+        END IF;
+
+    END LOOP;
+END;
