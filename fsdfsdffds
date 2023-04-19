@@ -1,0 +1,11 @@
+        IF reg_datos_medico.annos_trab BETWEEN 1 AND 5 THEN
+            v_bonif_annos := 50000;
+        ELSIF reg_datos_medico.annos_trab BETWEEN 6 AND 10 THEN
+            v_bonif_annos := 100000;
+        ELSIF reg_datos_medico.annos_trab BETWEEN 11 AND 15 THEN
+            v_bonif_annos := 150000;
+        ELSIF reg_datos_medico.annos_trab >= 16 THEN
+            v_bonif_annos := 20000;
+        ELSE
+            v_bonif_annos := 0;
+        END IF;
