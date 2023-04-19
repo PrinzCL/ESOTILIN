@@ -1,0 +1,15 @@
+1--
+VARIABLE b_contador NUMBER;
+EXEC :b_contador := 1;
+DECLARE
+   TYPE tp_varray_peliculas IS VARRAY(5) OF VARCHAR2(20);
+   varray_peliculas  tp_varray_peliculas;
+   v_numero NUMBER(2);
+BEGIN
+ varray_peliculas:= tp_varray_peliculas('Anabelle','Pantera Negra','Capitan America','El Pepe','Capitan Boxeo');
+    DBMS_OUTPUT.PUT_LINE('LISTADO DE PELICULAS');
+    FOR i IN varray_peliculas.first() .. varray_peliculas.count() LOOP
+        DBMS_OUTPUT.PUT_LINE(i||'. '||varray_peliculas(i));
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('El total de peliiculas es '|| varray_peliculas.count());
+END; 
