@@ -1,0 +1,38 @@
+DECLARE
+    CURSOR c_comuna IS
+    SELECT
+        nombre_comuna comuna
+    FROM
+        comuna;
+
+    CURSOR c_socio (
+        p_nombre_comuna VARCHAR2
+    ) IS
+    SELECT
+        s.pnombre nombre
+    FROM
+             socio s
+        INNER JOIN comuna c ON s.cod_comuna = c.cod_comuna
+                               AND s.cod_provincia = c.cod_provincia
+                               AND s.cod_region = c.cod_region
+    WHERE
+        c.nombre_comuna = p_nombre_comuna;
+        v_contador_socio NUMBER(20);
+        v_contador_total NUMBER(20);
+        
+
+BEGIN
+    FOR r_comuna IN c_comuna LOOP
+        v_contador_total :=0;
+        v_contador_socio := 0;
+        dbms_output.put_line('COMUNA: ' || r_comuna.comuna);
+        FOR r_socio IN c_socio(r_comuna.comuna) LOOP
+            v_contador_socio := v_contador_socio + 1;
+            dbms_output.put_line(v_contador_socio ||'. '|| r_socio.nombre);
+        END LOOP;
+        v_contador_total := v_contador_socio;
+        dbms_output.put_line('TOTAL: ' || v_contador_total);
+        dbms_output.put_line('----------------------------');
+        
+    END LOOP;
+END;
