@@ -1,0 +1,128 @@
+variable b_mes number;
+exec :b_mes := 02;
+variable b_annio number;
+exec :b_annio := 2023;
+
+DECLARE
+    v_bonificacion_annios VARCHAR2(20);
+    v_carga_familiar      NUMBER(5);
+    v_asig_escolaridad    VARCHAR2(20);
+    CURSOR c_empleado IS
+    SELECT
+        e.numrun_emp      rut,
+        e.id_vacunatorio  id_vacunatorio,
+        e.sueldo_base_emp sueldo
+    FROM
+             empleado e
+        INNER JOIN vacunatorio v ON e.id_vacunatorio = v.id_vacunatorio
+        INNER JOIN salud       s ON s.cod_salud = e.cod_salud
+        INNER JOIN afp         afp ON e.cod_afp = afp.cod_afp;
+    
+    TYPE tp_varray_bon_annios IS VARRAY(7) OF NUMBER;
+   varray_bon_anios  tp_varray_bon_annios;
+   
+       TYPE tp_varray_asig_esc IS VARRAY(7) OF NUMBER;
+   varray_asig_esc  tp_varray_asig_esc;
+
+BEGIN
+    varray_bon_anios := tp_varray_bon_annios(4,6,8,10,12,14,0);
+    varray_asig_esc := tp_varray_asig_esc(2,4,6,8,10,12,0);
+    FOR r_empleado IN c_empleado LOOP
+        
+        SELECT
+            COUNT(numrut_carga)
+        INTO v_carga_familiar
+        FROM
+            carga_familiar
+        WHERE
+            numrun_emp = r_empleado.rut;
+
+        SELECT
+            CASE
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) BETWEEN 10 AND 14 THEN
+                    sueldo_base_emp * ( varray_bon_anios(1) / 100 )
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) BETWEEN 15 AND 18 THEN
+                    sueldo_base_emp * ( varray_bon_anios(2) / 100 )
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) BETWEEN 19 AND 22 THEN
+                    sueldo_base_emp * ( varray_bon_anios(3) / 100 )
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) BETWEEN 23 AND 26 THEN
+                    sueldo_base_emp * ( varray_bon_anios(4) / 100 )
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) BETWEEN 27 AND 30 THEN
+                    sueldo_base_emp * ( varray_bon_anios(5) / 100 )
+                WHEN trunc(months_between(
+                    sysdate,
+                    fecing_emp
+                ) / 12) > 31              THEN
+                    sueldo_base_emp * ( varray_bon_anios(6) / 100 )
+                ELSE
+                    varray_bon_anios(7)
+            END AS bonificacion_annios
+        INTO v_bonificacion_annios
+        FROM
+            empleado
+        WHERE
+            numrun_emp = r_empleado.rut;
+
+        SELECT
+            CASE
+                WHEN id_escolaridad = 10 THEN
+                    sueldo_base_emp * ( varray_asig_esc(1) / 100 )
+                WHEN id_escolaridad = 20 THEN
+                    sueldo_base_emp * ( varray_asig_esc(2) / 100 )
+                WHEN id_escolaridad = 30 THEN
+                    sueldo_base_emp * ( varray_asig_esc(3) / 100 )
+                WHEN id_escolaridad = 40 THEN
+                    sueldo_base_emp * ( varray_asig_esc(4) / 100 )
+                WHEN id_escolaridad = 50 THEN
+                    sueldo_base_emp * ( varray_asig_esc(5) / 100 )
+                WHEN id_escolaridad = 60 THEN
+                    sueldo_base_emp * ( varray_asig_esc(6) / 100 )
+                ELSE
+                    varray_asig_esc(7)
+            END AS asig_escolaridad
+        INTO v_asig_escolaridad
+        FROM
+            empleado
+        WHERE
+            numrun_emp = r_empleado.rut;
+
+        dbms_output.put_line(''
+                             || :b_mes
+                             || ' '
+                             || :b_annio
+                             || ' '
+                             || r_empleado.rut
+                             || ' '
+                             || r_empleado.id_vacunatorio
+                             || ' '
+                             || r_empleado.sueldo
+                             || ' '
+                             || round(v_bonificacion_annios)
+                             || ' '
+                             ||(v_carga_familiar * 85000)
+                             || ' '
+                             || v_carga_familiar
+                             || ' todavia nada '
+                             || '9500'
+                             || ' '
+                             || round(v_asig_escolaridad)
+                             || ' '
+                             || round(r_empleado.sueldo + v_bonificacion_annios +(v_carga_familiar * 85000) + v_asig_escolaridad));
+
+    END LOOP;
+END;
