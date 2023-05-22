@@ -1,0 +1,21 @@
+CREATE OR REPLACE PROCEDURE saludar(p_run NUMBER)  AS
+    v_nombre VARCHAR(20);
+    v_apellido VARCHAR(20);
+
+
+
+        
+BEGIN
+    SELECT
+        pnombre_adm,
+        apmaterno_adm
+    INTO
+        v_nombre,
+        v_apellido
+    FROM
+        administrador
+        
+    WHERE numrun_adm = p_run     ;
+
+    dbms_output.put_line('HOLA ' || v_nombre || ' ' || v_apellido);
+END saludar;
