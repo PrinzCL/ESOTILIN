@@ -1,0 +1,165 @@
+--Creacion de trigger
+
+CREATE OR REPLACE TRIGGER trg_monto_boleta AFTER
+    INSERT OR UPDATE OR DELETE ON boleta
+    FOR EACH ROW
+DECLARE
+    v_asignacion NUMBER(15);
+BEGIN
+    IF inserting THEN
+    -- Calcular la asignación por atención médica para la nueva boleta
+        v_asignacion := round(:new.monto_boleta * 0.15);
+        INSERT INTO asignacion_aten_med (
+            nro_boleta,
+            valor_comision
+        ) VALUES (
+            :new.nro_boleta,
+            v_asignacion
+        );
+
+    ELSIF updating THEN
+    -- Verificar si el monto de la boleta ha cambiado
+        IF :old.monto_boleta <> :new.monto_boleta THEN
+      -- Actualizar el monto de la boleta y su asignación correspondiente
+            IF :old.monto_boleta < :new.monto_boleta THEN
+                v_asignacion := round(:new.monto_boleta * 0.15);
+                UPDATE asignacion_aten_med
+                SET
+                    valor_comision = v_asignacion
+                WHERE
+                    nro_boleta = :new.nro_boleta;
+
+            END IF;
+
+        END IF;
+    ELSIF deleting THEN
+    -- Eliminar la asignación por atención médica de la boleta
+        DELETE FROM asignacion_aten_med
+        WHERE
+            nro_boleta = :old.nro_boleta;
+
+    END IF;
+END;
+
+
+
+--Creacion de package y funciones
+
+create or replace NONEDITIONABLE PACKAGE PKG_CALCULOS_2 IS
+v_carga_familiar number:= 4500;
+v_mensaje_error VARCHAR2(250);
+v_porc_descto NUMBER(4,2);
+PROCEDURE P_GRABAR_ERROR(p_runtina_error VARCHAR2, 
+p_mensaje_error VARCHAR2);
+
+FUNCTION FN_BON_ANNIOS_TRABAJOS
+(p_run_esp NUMBER ) RETURN NUMBER;
+
+FUNCTION FN_CARGA_FAMILIAR
+(p_run_esp NUMBER ) RETURN NUMBER;
+
+FUNCTION FN_ATENCIONES_MEDICAS
+(p_run_esp NUMBER) RETURN NUMBER;
+
+END PKG_CALCULOS_2;
+CREATE OR REPLACE PACKAGE BODY pkg_calculos_2 AS
+
+    PROCEDURE p_grabar_error (
+        p_runtina_error VARCHAR2,
+        p_mensaje_error VARCHAR2
+    ) AS
+    BEGIN
+        INSERT INTO error_proceso_remun VALUES (
+            seq_error.NEXTVAL,
+            p_runtina_error,
+            p_mensaje_error
+        );
+
+    END p_grabar_error;
+
+    FUNCTION fn_bon_annios_trabajos (
+        p_run_esp NUMBER
+    ) RETURN NUMBER AS
+        v_bono_sueldo NUMBER(10);
+    BEGIN
+        SELECT
+            CASE
+                WHEN trunc(months_between(sysdate, fecing_emp) / 12) BETWEEN 2 AND 9   THEN
+                    sueldo_base_emp * ( 4 / 100 )
+                WHEN trunc(months_between(sysdate, fecing_emp) / 12) BETWEEN 10 AND 12 THEN
+                    sueldo_base_emp * ( 6 / 100 )
+                WHEN trunc(months_between(sysdate, fecing_emp) / 12) BETWEEN 13 AND 17 THEN
+                    sueldo_base_emp * ( 7 / 100 )
+                WHEN trunc(months_between(sysdate, fecing_emp) / 12) BETWEEN 17 AND 30 THEN
+                    sueldo_base_emp * ( 10 / 100 )
+                ELSE
+                    sueldo_base_emp * 0
+            END AS bono_annios
+        INTO v_bono_sueldo
+        FROM
+            empleado
+        WHERE
+            numrut_emp = p_run_esp;
+
+        RETURN v_bono_sueldo;
+    END fn_bon_annios_trabajos;
+
+    FUNCTION fn_carga_familiar (
+        p_run_esp NUMBER
+    ) RETURN NUMBER AS
+        v_carga_familiar NUMBER(10);
+    BEGIN
+        SELECT
+            COUNT(*)
+        INTO v_carga_familiar
+        FROM
+            carga_familiar
+        WHERE
+            numrut_emp = p_run_esp;
+
+        RETURN v_carga_familiar;
+    END fn_carga_familiar;
+
+    FUNCTION fn_atenciones_medicas (
+        p_run_esp NUMBER
+    ) RETURN NUMBER AS
+        v_valor_comision NUMBER(10);
+    BEGIN
+        SELECT
+            SUM(a.valor_comision)
+        INTO v_valor_comision
+        FROM
+                 boleta b
+            INNER JOIN asignacion_aten_med a ON b.nro_boleta = a.nro_boleta
+        WHERE
+            b.numrut_emp = p_run_esp;
+
+        RETURN v_valor_comision;
+    END fn_atenciones_medicas;
+
+END pkg_calculos_2;
+
+
+--Select
+
+variable b_mes number;
+exec :b_mes := &MES;
+variable b_annio number;
+exec :b_annio := &ANNIO;
+DECLARE
+
+CURSOR c_empleado IS
+SELECT
+    numrut_emp RUT,
+    trunc(months_between(sysdate, fecing_emp)/12) annios_trabajo,
+    sueldo_base_emp sueldo,
+    pkg_calculo_2.fn_bon_annios_trabajos(numrut_emp) bono_annios,
+    (pkg_calculo_2.fn_carga_familiar(numrut_emp)*4500) valor_carga,
+    NVL(pkg_calculo_2.fn_atenciones_medicas(numrut_emp),0) atenciones_med
+FROM
+    empleado;
+BEGIN
+    FOR r_empleado in c_empleado LOOP
+        dbms_output.put_line(r_empleado.RUT||' '|| :b_mes ||' '|| :b_annio||' '|| r_empleado.annios_trabajo||' '|| r_empleado.sueldo||' '||r_empleado.bono_annios||' '||r_empleado.valor_carga||' '||'0'||' '||'40000'||' '||r_empleado.atenciones_med);
+    END LOOP;
+END;	
